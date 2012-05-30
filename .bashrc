@@ -62,10 +62,13 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Personal Settings
-alias ll="ls -l"
+export EDITOR=vim
+alias ll="ls -lh"
+alias ll="ls -lha"
 alias nv="nano -v"
 alias nt="nano -E"
+alias gr="grep -r"
+alias gi="git di"
 
-# Android Development PATH
-export PATH=${PATH}:/opt/android-sdk/tools
-export PATH=${PATH}:/opt/android-sdk/platform-tools
+# Arch-specific
+complete -o default -o nospace -F _pacman pacman-color
