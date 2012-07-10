@@ -10,7 +10,7 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-use_color=false
+use_color=true
 
 # Set colorful PS1 only on colorful terminals.
 # dircolors --print-database uses its own built-in database
@@ -67,8 +67,10 @@ alias ll="ls -lh"
 alias ll="ls -lha"
 alias nv="nano -v"
 alias nt="nano -E"
-alias gr="grep -r"
+alias gr="grep --color=always -r"
 alias gi="git di"
+alias ta="tmux attach"
+alias lr="less -r"
 
 # Arch-specific
 complete -o default -o nospace -F _pacman pacman-color
