@@ -37,15 +37,21 @@ set shiftwidth=4
 set cinkeys=0{,0},:,0#,!^F
 set smarttab
 
+set gdefault " substitutions apply to entire lines by default
+
+" Stop the accidental opening of help when mashing ESC
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+nnoremap ; :
+
 map cw <esc>:cw<cr>
 map cn <esc>:cn<cr>
 map cp <esc>:cp<cr>
 
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Use jk for exiting to normal mode
-imap jk <ESC>
 
 if has("autocmd")
     filetype on
