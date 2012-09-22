@@ -71,6 +71,8 @@ alias gr="grep --color=always -r"
 alias gi="git di"
 alias ta="tmux attach"
 alias lr="less -r"
+alias :e="vim"
 
 # Arch-specific
 complete -o default -o nospace -F _pacman pacman-color
+export XAUTHORITY=/home/$USER/.Xauthority
