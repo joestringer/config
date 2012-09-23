@@ -96,3 +96,8 @@ function! HasPaste()
     en
     return ''
 endfunction
+
+" MinibufExplorer options
+"let g:miniBufExplVSplit = 20
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
