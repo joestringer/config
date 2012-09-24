@@ -89,6 +89,9 @@ func! CleanupWS()
   exe "normal `z"
 endfunc
 
+" Don't return to last edit position for git commits
+au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
 " Returns true if paste mode is enabled
 function! HasPaste()
     if &paste
