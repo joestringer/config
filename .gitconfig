@@ -1,0 +1,16 @@
+[user]
+  name = Joe Stringer
+  email = joestringernz@gmail.com
+[color]
+  diff = auto
+  ui = true
+[alias]
+  ap = add -p
+  ci = commit
+  ca = commit --amend
+  co = checkout
+  cb = checkout -b
+  di = diff
+  dc = diff --cached
+  st = stash
+  sp = stash pop
