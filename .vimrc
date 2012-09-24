@@ -104,3 +104,11 @@ endfunction
 "let g:miniBufExplVSplit = 20
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
+
+" Svndiff()
+hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green'
+hi DiffDelete   ctermfg=0 ctermbg=1 guibg='red'
+hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow'
+noremap <F3> :call Svndiff("prev")<CR>
+noremap <F4> :call Svndiff("next")<CR>
+noremap <F5> :call Svndiff("clear")<CR>
