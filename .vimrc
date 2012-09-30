@@ -21,7 +21,6 @@ set history=3000        " keep 3000 lines of command line history
 set maxmem=25123  " 24 MB -  max mem in Kbyte to use for one buffer.  Max is 2000000
 
 set noautowrite         " don't automagically write on :next
-set paste               " don't indent blocks of pasted text
 
 set showcmd         " Show us the command we're typing
 set showfulltag       " show full completion tags
@@ -92,6 +91,15 @@ endfunc
 " Don't return to last edit position for git commits
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
+" Don't highlight characters 77-80 in tex files, autowrap paragraphs, place
+" miniBufExpl to the left
+function TexSettings()
+    au VimEnter * call matchdelete(w:m1)
+    au VimEnter * set formatoptions+=a
+    let g:miniBufExplVSplit = 20
+endfunction
+au FileType tex,plaintex call TexSettings()
+
 " Returns true if paste mode is enabled
 function! HasPaste()
     if &paste
@@ -101,7 +109,6 @@ function! HasPaste()
 endfunction
 
 " MinibufExplorer options
-"let g:miniBufExplVSplit = 20
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 
