@@ -94,11 +94,13 @@ au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 " Don't highlight characters 77-80 in tex files, autowrap paragraphs, place
 " miniBufExpl to the left
 function TexSettings()
-    au VimEnter * call matchdelete(w:m1)
-    au VimEnter * set formatoptions+=a
-    let g:miniBufExplVSplit = 20
+  call clearmatches()
+  set formatoptions+=a
 endfunction
-au FileType tex,plaintex call TexSettings()
+
+au FileType tex,plaintex let g:miniBufExplVSplit = 20
+au FileType tex,plaintex au BufWinEnter * call TexSettings()
+au FileType bib,make au BufWinEnter * set formatoptions-=a     " Remove autowrap
 
 " Returns true if paste mode is enabled
 function! HasPaste()
