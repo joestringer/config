@@ -3,6 +3,7 @@ set nocompatible    " vim, not vi.. must be first, because it changes other opti
 set background=dark
 set modeline
 
+set laststatus=2   " Always show the statusline
 set statusline=%M%h%y\ %t\ %F\ %p%%\ %l/%L\ %=[%{&ff},%{&ft}]\ [a=\%03.3b]\ [h=\%02.2B]\ [%l,%v]
 set title titlelen=150 titlestring=%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
 
@@ -43,11 +44,11 @@ inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
-nnoremap ; :
+set pastetoggle=<F2>
+map <F7> :setlocal spell! spelllang=en_nz<CR>
+map <F10>:set formatoptions-=a<CR>
 
-map cw <esc>:cw<cr>
-map cn <esc>:cn<cr>
-map cp <esc>:cp<cr>
+nnoremap ; :
 
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
