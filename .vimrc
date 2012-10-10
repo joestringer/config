@@ -46,7 +46,18 @@ vnoremap <F1> <ESC>
 
 set pastetoggle=<F2>
 map <F7> :setlocal spell! spelllang=en_nz<CR>
-map <F10>:set formatoptions-=a<CR>
+
+let g:formatoptions = 'off'
+function! ToggleAutoWrap()
+    if g:formatoptions  == 'off'
+        set formatoptions+=a
+        let g:formatoptions = 'on'
+    else
+        set formatoptions-=a
+        let g:formatoptions = 'off'
+    endif
+endfunction
+map <F10> :call ToggleAutoWrap()<CR>
 
 nnoremap ; :
 
@@ -94,9 +105,8 @@ au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
 " Don't highlight characters 77-80 in tex files, autowrap paragraphs, place
 " miniBufExpl to the left
-function TexSettings()
+function! TexSettings()
   call clearmatches()
-  set formatoptions+=a
 endfunction
 
 au FileType tex,plaintex let g:miniBufExplVSplit = 20
