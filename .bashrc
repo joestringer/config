@@ -67,7 +67,6 @@ alias ll="ls -lh"
 alias ll="ls -lha"
 alias nv="nano -v"
 alias nt="nano -E"
-alias gr="grep --color=always -r"
 alias gi="git di"
 alias ta="tmux attach"
 alias lr="less -r"
@@ -76,3 +75,17 @@ alias :e="vim"
 # Arch-specific
 complete -o default -o nospace -F _pacman pacman-color
 export XAUTHORITY=/home/$USER/.Xauthority
+
+# Grep recursive
+function gr()
+{
+    if [ "$#" == "1" ]
+    then
+        grep -r $* .
+    elif [ "$#" -ge "2" ]
+    then
+        grep -r $*
+    else
+        echo `grep`
+    fi
+}
