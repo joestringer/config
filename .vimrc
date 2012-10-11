@@ -52,9 +52,11 @@ function! ToggleAutoWrap()
     if g:formatoptions  == 'off'
         set formatoptions+=a
         let g:formatoptions = 'on'
+        echo "autowrap=on"
     else
         set formatoptions-=a
         let g:formatoptions = 'off'
+        echo "autowrap=off"
     endif
 endfunction
 map <F10> :call ToggleAutoWrap()<CR>
