@@ -105,15 +105,8 @@ endfunc
 " Don't return to last edit position for git commits
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
-" Don't highlight characters 77-80 in tex files, autowrap paragraphs, place
-" miniBufExpl to the left
-function! TexSettings()
-  call clearmatches()
-endfunction
-
 au FileType tex,plaintex let g:miniBufExplVSplit = 20
-au FileType tex,plaintex au BufWinEnter * call TexSettings()
-au FileType bib,make au BufWinEnter * set formatoptions-=a     " Remove autowrap
+au FileType tex,plaintex au BufWinEnter * call clearmatches()
 
 " Returns true if paste mode is enabled
 function! HasPaste()
