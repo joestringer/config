@@ -32,12 +32,13 @@ set cindent
 set smartindent
 set autoindent
 set expandtab
-set tabstop=2
+set tabstop=4
 set shiftwidth=4
 set cinkeys=0{,0},:,0#,!^F
 set smarttab
 
 set gdefault " substitutions apply to entire lines by default
+set nojoinspaces " Don't double-space between sentences
 
 " Stop the accidental opening of help when mashing ESC
 inoremap <F1> <ESC>
