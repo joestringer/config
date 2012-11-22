@@ -31,7 +31,6 @@ set listchars=tab:>.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
 set cindent
 set smartindent
 set autoindent
-set expandtab
 set tabstop=4
 set shiftwidth=4
 set cinkeys=0{,0},:,0#,!^F
@@ -61,6 +60,23 @@ function! ToggleAutoWrap()
     endif
 endfunction
 map <F10> :call ToggleAutoWrap()<CR>
+
+" Don't expand tabs for Makefiles
+autocmd FileType make setlocal noexpandtab
+
+let g:taboptions = 'off'
+function! ToggleTabsToSpaces()
+    if g:taboptions == 'off'
+        set expandtab
+        let g:taboptions = 'on'
+        echo "expandtab=on"
+    else
+        set noexpandtab
+        let g:taboptions = 'off'
+        echo "expandtab=off"
+    endif
+endfunction
+map <F8> :call ToggleTabsToSpaces()<CR>
 
 nnoremap ; :
 
