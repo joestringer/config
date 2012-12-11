@@ -35,6 +35,7 @@ set tabstop=4
 set shiftwidth=4
 set cinkeys=0{,0},:,0#,!^F
 set smarttab
+set expandtab
 
 set gdefault " substitutions apply to entire lines by default
 set nojoinspaces " Don't double-space between sentences
