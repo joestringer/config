@@ -14,3 +14,5 @@
   dc = diff --cached
   st = stash
   sp = stash pop
+  si = stash --keep-index
+  cp = cherry-pick
