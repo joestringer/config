@@ -64,7 +64,7 @@ map <F10> :call ToggleAutoWrap()<CR>
 " Don't expand tabs for Makefiles
 autocmd FileType make setlocal noexpandtab
 
-let g:taboptions = 'off'
+let g:taboptions = 'on'
 function! ToggleTabsToSpaces()
     if g:taboptions == 'off'
         set expandtab
