@@ -16,3 +16,8 @@
   sp = stash pop
   si = stash --keep-index
   cp = cherry-pick
+  lo = log --oneline
+  a3 = am -3
+  fp = format-patch
+  ra = rebase -i --autosquash
+  lg =  log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
