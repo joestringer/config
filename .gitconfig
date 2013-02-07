@@ -7,7 +7,6 @@
 [alias]
   ap = add -p
   ci = commit
-  ca = commit --amend
   co = checkout
   cb = checkout -b
   di = diff
