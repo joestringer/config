@@ -72,6 +72,16 @@ alias ta="tmux attach"
 alias lr="less -r"
 alias :e="vim"
 
+function tn() {
+    if [ $# -eq 0 ]; then
+        SESSION=0;
+    else
+        SESSION=$1
+    fi
+    CLIENTID=$SESSION.`date +%S`
+    tmux new-session -d -t $SESSION -s $CLIENTID \; set-option destroy-unattached \; attach-session -t $CLIENTID
+}
+
 # Arch-specific
 complete -o default -o nospace -F _pacman pacman-color
 export XAUTHORITY=/home/$USER/.Xauthority
