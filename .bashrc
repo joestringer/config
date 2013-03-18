@@ -78,6 +78,12 @@ function tn() {
     else
         SESSION=$1
     fi
+
+    tmux has-session $SESSION
+    if [ $? -ne 0 ]; then
+        tmux new-session -d -s $SESSION;
+    fi
+
     CLIENTID=$SESSION.`date +%S`
     tmux new-session -d -t $SESSION -s $CLIENTID \; set-option destroy-unattached \; attach-session -t $CLIENTID
 }
