@@ -88,6 +88,14 @@ function tn() {
     tmux new-session -d -t $SESSION -s $CLIENTID \; set-option destroy-unattached \; attach-session -t $CLIENTID
 }
 
+function watchmake() {
+    while true; do
+        inotifywait -q -e move $1;
+        make;
+        sleep 1;
+    done
+}
+
 # Arch-specific
 complete -o default -o nospace -F _pacman pacman-color
 export XAUTHORITY=/home/$USER/.Xauthority
