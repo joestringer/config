@@ -88,6 +88,15 @@ function tn() {
     tmux new-session -d -t $SESSION -s $CLIENTID \; set-option destroy-unattached \; attach-session -t $CLIENTID
 }
 
+# Keep trying
+function kt()
+{
+    while true; do
+        $*;
+        sleep 1;
+    done
+}
+
 function watchmake() {
     while true; do
         inotifywait -q -e move $1;
