@@ -31,7 +31,7 @@ set listchars=tab:>.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
 set cindent
 set smartindent
 set autoindent
-set tabstop=4
+set tabstop=8
 set shiftwidth=4
 set cinkeys=0{,0},:,0#,!^F
 set smarttab
