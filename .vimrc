@@ -48,6 +48,8 @@ vnoremap <F1> <ESC>
 set pastetoggle=<F2>
 map <F7> :setlocal spell! spelllang=en_nz<CR>
 
+map <C-[> <C-\>s
+
 let g:formatoptions = 'off'
 function! ToggleAutoWrap()
     if g:formatoptions  == 'off'
