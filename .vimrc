@@ -40,6 +40,8 @@ set expandtab
 set gdefault " substitutions apply to entire lines by default
 set nojoinspaces " Don't double-space between sentences
 
+set cscopetag
+
 " Stop the accidental opening of help when mashing ESC
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
@@ -47,8 +49,6 @@ vnoremap <F1> <ESC>
 
 set pastetoggle=<F2>
 map <F7> :setlocal spell! spelllang=en_nz<CR>
-
-map <C-[> <C-\>s
 
 let g:formatoptions = 'off'
 function! ToggleAutoWrap()
