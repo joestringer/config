@@ -132,6 +132,7 @@ endfunc
 
 " Don't return to last edit position for git commits
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+autocmd Filetype gitcommit setlocal spell textwidth=72
 
 au FileType tex,plaintex let g:miniBufExplVSplit = 20
 au FileType tex,plaintex au BufWinEnter * call clearmatches()
