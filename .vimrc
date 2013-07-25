@@ -81,27 +81,13 @@ function! ToggleTabsToSpaces()
 endfunction
 map <F8> :call ToggleTabsToSpaces()<CR>
 
-let g:runcscope = 'off'
-function! ToggleCscopeOnSave()
-    if g:runcscope == 'off'
-        let g:runcscope = 'on'
-        echo "Running Cscope each time you save."
-    else
-        let g:runcscope = 'off'
-        echo "Not running Cscope each time you save."
-    endif
+function! RunCscope()
+    silent !cscope -R -b 2>&1 >/dev/null
+    silent !ctags -R 2>&1 >/dev/null
+    silent cs reset
+    redraw!
 endfunction
-map <F9> :call ToggleCscopeOnSave()<CR>
-
-function! RunCscopeOnSave()
-    if g:runcscope == 'on'
-        silent !cscope -R -b 2>&1 >/dev/null
-        silent !ctags -R 2>&1 >/dev/null
-        silent cs reset
-        redraw!
-    endif
-endfunction
-autocmd BufWritePost *.cpp,*.c,*.h call RunCscopeOnSave()
+map <F9> :call RunCscope()<CR>
 
 nnoremap ; :
 
