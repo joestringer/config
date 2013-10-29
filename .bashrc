@@ -114,7 +114,7 @@ function gr()
 {
     if [ "$#" == "1" ]
     then
-        grep -r $* .
+        grep -r "$*" . | grep -vE "(cscope|tags|.git|testsuite)" | grep "$*"
     elif [ "$#" -ge "2" ]
     then
         grep -r $*
