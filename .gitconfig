@@ -1,6 +1,8 @@
 [user]
   name = Joe Stringer
   email = joestringernz@gmail.com
+[core]
+  editor = vim
 [color]
   diff = auto
   ui = true
