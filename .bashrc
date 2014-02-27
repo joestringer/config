@@ -122,3 +122,17 @@ function gr()
         echo `grep`
     fi
 }
+
+function gse()
+{
+    echo "Have you run \"make check\" yet?"
+    echo "What's the shape of the patch?"
+    echo
+    git send-email $@
+}
+
+function tuf()
+{
+    sh -c `$@`
+    time sh -c 'while [ $? -eq 0 ]; do sleep 0.5; `$@`; done'
+}
