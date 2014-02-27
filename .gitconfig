@@ -22,7 +22,8 @@
   fp = format-patch
   ra = rebase -i --autosquash
   rc = rebase --continue
-  lg =  log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  ls = diff-tree --no-commit-id --name-only -r
 [push]
   default = simple
 [sendemail]
