@@ -13,6 +13,7 @@
   cb = checkout -b
   di = diff
   dc = diff --cached
+  sb = status -sb
   st = stash
   sp = stash pop
   si = stash --keep-index
