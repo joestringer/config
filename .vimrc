@@ -137,6 +137,8 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 au FileType tex,plaintex let g:miniBufExplVSplit = 20
 au FileType tex,plaintex au BufWinEnter * call clearmatches()
 
+au BufRead,BufNewFile *.go set filetype=go
+
 " Returns true if paste mode is enabled
 function! HasPaste()
     if &paste
