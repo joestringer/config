@@ -72,6 +72,7 @@ alias ta="tmux attach"
 alias lr="less -r"
 alias :e="vim"
 
+# Tmux New
 function tn() {
     if [ $# -eq 0 ]; then
         SESSION=0;
@@ -123,6 +124,7 @@ function gr()
     fi
 }
 
+# Git send email with prompt.
 function gse()
 {
     echo "Have you run \"make check\" yet?"
@@ -131,6 +133,7 @@ function gse()
     git send-email $@
 }
 
+# Test until Fail.
 function tuf()
 {
     sh -c `$@`
