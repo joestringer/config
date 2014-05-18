@@ -61,6 +61,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# Client-specific settings
+if [ -e ~/.bashrc.local ]; then
+    source ~/.bashrc.local
+fi
+
 # Personal Settings
 export EDITOR=vim
 alias ll="ls -lh"
@@ -105,10 +110,6 @@ function watchmake() {
         sleep 1;
     done
 }
-
-# Arch-specific
-complete -o default -o nospace -F _pacman pacman-color
-export XAUTHORITY=/home/$USER/.Xauthority
 
 # Grep recursive
 function gr()
