@@ -85,13 +85,20 @@ function tn() {
         SESSION=$1
     fi
 
+    # Prevent nesting
+    if [ -n "$TMUX" ]; then
+        return
+    fi
+
     tmux has-session $SESSION
     if [ $? -ne 0 ]; then
         tmux new-session -d -s $SESSION;
     fi
 
-    CLIENTID=$SESSION.`date +%S`
-    tmux new-session -d -t $SESSION -s $CLIENTID \; set-option destroy-unattached \; attach-session -t $CLIENTID
+    CLIENTID=$SESSION.`date +%Y%m%d%H%M%S`
+    tmux new-session -d -t $SESSION -s $CLIENTID
+    tmux attach-session -t $CLIENTID
+    tmux kill-session -t $CLIENTID
 }
 
 # Keep trying
