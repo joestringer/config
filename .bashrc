@@ -95,6 +95,12 @@ function tn() {
         tmux new-session -d -s $SESSION;
     fi
 
+    # Clear unattached sessions
+    IDLE=$(tmux ls 2>/dev/null | egrep "^.*\.[0-9]{14}.*[0-9]+\)$" | cut -f 1 -d:)
+    for old_session_id in $IDLE; do
+        tmux kill-session -t $IDLE
+    done
+
     CLIENTID=$SESSION.`date +%Y%m%d%H%M%S`
     tmux new-session -d -t $SESSION -s $CLIENTID
     tmux attach-session -t $CLIENTID
