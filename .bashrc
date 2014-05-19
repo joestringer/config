@@ -87,10 +87,11 @@ function tn() {
 
     # Prevent nesting
     if [ -n "$TMUX" ]; then
-        return
+        echo "Thwarted an attempt to nest tmux sessions."
+        return 1
     fi
 
-    tmux has-session $SESSION
+    tmux has-session -t $SESSION
     if [ $? -ne 0 ]; then
         tmux new-session -d -s $SESSION;
     fi
