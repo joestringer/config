@@ -74,12 +74,11 @@ alias nv="nano -v"
 alias nt="nano -E"
 alias gi="git di"
 alias show="git show"
-alias ta="tmux attach"
 alias lr="less -r"
 alias :e="vim"
 
-# Tmux New
-function tn() {
+# Tmux Attach
+function ta() {
     if [ $# -eq 0 ]; then
         SESSION=0;
     else
