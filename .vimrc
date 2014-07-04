@@ -71,10 +71,12 @@ let g:taboptions = 'on'
 function! ToggleTabsToSpaces()
     if g:taboptions == 'off'
         set expandtab
+        set shiftwidth=4
         let g:taboptions = 'on'
         echo "expandtab=on"
     else
         set noexpandtab
+        set shiftwidth=8
         let g:taboptions = 'off'
         echo "expandtab=off"
     endif
