@@ -144,6 +144,7 @@ function gse()
 {
     echo "Have you run \"make check\" yet?"
     echo "What's the shape of the patch?"
+    echo "Which branch is this for?"
     echo
     git send-email $@
 }
