@@ -15,7 +15,7 @@ set cmdheight=1         " command line two lines high
 set complete=.,w,b,u,U,t,i,d  " do lots of scanning on tab completion
 set cursorline          " show the cursor line
 
-set enc=utf-8 fenc=utf-8   " utf-8 encoding
+set enc=utf-8 fenc=utf-8 tenc=utf-8   " utf-8 encoding
 set ffs=unix,dos,mac       " default fileformats
 
 set history=3000        " keep 3000 lines of command line history
