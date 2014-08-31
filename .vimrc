@@ -70,11 +70,13 @@ autocmd FileType make setlocal noexpandtab
 let g:taboptions = 'on'
 function! ToggleTabsToSpaces()
     if g:taboptions == 'off'
+        set nolist
         set expandtab
         set shiftwidth=4
         let g:taboptions = 'on'
         echo "expandtab=on"
     else
+        set list
         set noexpandtab
         set shiftwidth=8
         let g:taboptions = 'off'
