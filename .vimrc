@@ -87,7 +87,7 @@ map <F8> :call ToggleTabsToSpaces()<CR>
 
 function! RunCscope()
     silent !cscope -R -b 2>&1 >/dev/null
-    silent !ctags -R 2>&1 >/dev/null
+    silent !make tags 2>&1 >/dev/null
     silent cs reset
     redraw!
 endfunction
