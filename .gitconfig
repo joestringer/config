@@ -25,6 +25,8 @@
   rc = rebase --continue
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   ls = diff-tree --no-commit-id --name-only -r
+  sr = show --reverse
+  hsow = show
 [push]
   #default = simple
 [sendemail]
