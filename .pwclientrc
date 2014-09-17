@@ -1,0 +1,8 @@
+[options]
+default = openvswitch
+
+[openvswitch]
+url = http://patchwork.openvswitch.org/xmlrpc/
+
+[netdev]
+url = https://patchwork.ozlabs.org/xmlrpc/
