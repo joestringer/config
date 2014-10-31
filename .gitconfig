@@ -33,5 +33,6 @@
   suppresscc = self
   chainreplyto = false
   smtpserver = smtp.gmail.com
-  smtpssl
+  smtpserverport = 587
+  smtpencryption = tls
   confirm = always
