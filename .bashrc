@@ -142,7 +142,11 @@ function gr()
 # Git send email with prompt.
 function gse()
 {
-    echo "Have you run \"make check\" yet?"
+    if [ `git diff | wc -l` -ne 0 ] || [ `git diff --cached | wc -l` -ne 0 ]; then
+        echo "There are uncommitted changes in the tree."
+        return
+    fi
+    echo "Have you run 'make check' yet?"
     echo "What's the shape of the patch?"
     echo "Which branch is this for?"
     echo
