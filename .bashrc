@@ -179,6 +179,28 @@ function gpu()
     esac
 }
 
+# Given current git branch foo.X, create and switch to branch foo.X+1.
+function gcn()
+{
+    branch=`git status | head -n 1 | cut -s -d' ' -f 4-`
+
+    echo $branch | grep -q '\.'
+    if [ $? -eq 0 ]; then
+        base=`echo $branch | cut -s -d'.' -f -1`
+        version=`echo $branch | cut -s -d'.' -f 2-`
+        new_branch=$base.`echo "$version + 1" | bc -q`
+    else
+        echo $branch | grep -q '_v'
+        if [ $? -eq 0 ]; then
+            new_branch=$branch".1"
+        else
+            new_branch=$branch"_v1.1"
+        fi
+    fi
+
+    git checkout -b $new_branch
+}
+
 # Test until Fail.
 function tuf()
 {
