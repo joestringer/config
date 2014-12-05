@@ -150,7 +150,14 @@ function gse()
     echo "What's the shape of the patch?"
     echo "Which branch is this for?"
     echo
-    git send-email $@
+    read -r -p "Continue? [y/N] " response
+    case "$response" in
+        [yY])
+            git send-email $@
+            ;;
+        *)
+            ;;
+    esac
 }
 
 # Test until Fail.
