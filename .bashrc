@@ -160,6 +160,25 @@ function gse()
     esac
 }
 
+# Git push upstream with prompts.
+function gpu()
+{
+    echo "Patches between upstream and local master:"
+    git log --oneline upstream/master..master
+    echo
+    echo "Have you run 'make check'?"
+    echo "Do the patches have their Acks?"
+    echo
+    read -r -p "exec 'git push upstream master'? [y/N] " response
+    case $response in
+        [yY])
+            git push upstream master
+            ;;
+        *)
+            ;;
+    esac
+}
+
 # Test until Fail.
 function tuf()
 {
