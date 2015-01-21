@@ -153,7 +153,7 @@ function gse()
     read -r -p "Continue? [y/N] " response
     case "$response" in
         [yY])
-            git send-email $@
+            git send-email "$@"
             ;;
         *)
             ;;
@@ -164,15 +164,15 @@ function gse()
 function gpu()
 {
     echo "Patches between upstream and local master:"
-    git log --oneline upstream/master..master
+    git log --oneline upstream/master..core/master
     echo
     echo "Have you run 'make check'?"
     echo "Do the patches have their Acks?"
     echo
-    read -r -p "exec 'git push upstream master'? [y/N] " response
+    read -r -p "exec 'git push upstream core/master:master'? [y/N] " response
     case $response in
         [yY])
-            git push upstream master
+            git push upstream core/master:master
             ;;
         *)
             ;;
