@@ -10,6 +10,10 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+if [ "x$(ip netns identify $$)" != "x" ]; then
+    namespace="[$(ip netns identify $$)]"
+fi
+
 use_color=true
 
 # Set colorful PS1 only on colorful terminals.
@@ -37,9 +41,9 @@ if ${use_color} ; then
         fi
 
         if [[ ${EUID} == 0 ]] ; then
-                PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] '
+                PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\h\[\033[01;33m\]${namespace}\[\033[01;34m\] \W \$\[\033[00m\] '
         else
-                PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+                PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[01;33m\]${namespace}\[\033[01;34m\] \w \$\[\033[00m\] '
         fi
 
         alias ls='ls --color=auto'
