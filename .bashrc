@@ -205,6 +205,16 @@ function gcn()
     git checkout -b $new_branch
 }
 
+#Given current git branch X, create and switch to branch 'X+$1'
+function gcb()
+{
+    branch=`git status | head -n 1 | cut -s -d' ' -f 4-`
+
+    if [ $# -ge 1 ]; then
+        git checkout -b $new_branch+$1
+    fi
+}
+
 # Test until Fail.
 function tuf()
 {
