@@ -168,7 +168,7 @@ function gse()
 function gpu()
 {
     echo "Patches between upstream and local master:"
-    git log --oneline upstream/master..core/master
+    git log --oneline --reverse upstream/master..core/master
     echo
     echo "Have you run 'make check'?"
     echo "Do the patches have their Acks?"
