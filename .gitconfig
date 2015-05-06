@@ -9,6 +9,8 @@
 [alias]
   ap = add -p
   ci = commit
+  cm = commit -m
+  cms = commit -s -m
   co = checkout
   cb = checkout -b
   di = diff
@@ -21,6 +23,7 @@
   lo = log --oneline
   a3 = am -3
   fp = format-patch
+  ff = merge --ff-only
   ra = rebase -i --autosquash
   rc = rebase --continue
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
