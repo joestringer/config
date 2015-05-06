@@ -28,6 +28,9 @@
   sr = show --reverse
   lr = log --reverse
   hsow = show
+  tokern = am -p1 --directory='net/openvswitch/'
+  fromkern = am -p3 --directory='datapath/'
+  compat = am --directory='datapath/linux/compat/'
 [push]
   #default = simple
 [sendemail]
