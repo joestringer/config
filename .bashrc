@@ -106,7 +106,7 @@ function ta() {
         tmux kill-session -t $IDLE
     done
 
-    CLIENTID=$SESSION.`date +%Y%m%d%H%M%S`
+    CLIENTID=$SESSION+`date +%Y%m%d%H%M%S`
     tmux new-session -d -t $SESSION -s $CLIENTID
     tmux attach-session -t $CLIENTID
     tmux kill-session -t $CLIENTID
