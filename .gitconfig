@@ -35,7 +35,7 @@
   fromkern = am -p3 --directory='datapath/'
   compat = am --directory='datapath/linux/compat/'
 [push]
-  #default = simple
+  default = current
 [sendemail]
   suppresscc = self
   chainreplyto = false
