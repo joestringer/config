@@ -186,7 +186,7 @@ function gpu()
 # Given current git branch foo.X, create and switch to branch foo.X+1.
 function gcn()
 {
-    branch=`git status | head -n 1 | cut -s -d' ' -f 4-`
+    branch=`git status | head -n 1 | sed 's/^# *//' | cut -s -d' ' -f 3-`
 
     echo $branch | grep -q '\.'
     if [ $? -eq 0 ]; then
@@ -208,10 +208,10 @@ function gcn()
 #Given current git branch X, create and switch to branch 'X+$1'
 function gcb()
 {
-    branch=`git status | head -n 1 | cut -s -d' ' -f 4-`
+    branch=`git status | head -n 1 | sed 's/^# *//' | cut -s -d' ' -f 3-`
 
     if [ $# -ge 1 ]; then
-        git checkout -b $new_branch+$1
+        git checkout -b "$branch+$1"
     fi
 }
 
