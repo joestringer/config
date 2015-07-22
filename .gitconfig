@@ -34,6 +34,7 @@
   tokern = am -p2 --directory=net/openvswitch --reject
   fromkern = am -p3 --directory=datapath/ --reject
   compat = am --directory='datapath/linux/compat/'
+  mt = merge -s recursive -X theirs
 [push]
   default = current
 [sendemail]
