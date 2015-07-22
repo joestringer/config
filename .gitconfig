@@ -31,8 +31,8 @@
   sr = show --reverse
   lr = log --reverse
   hsow = show
-  tokern = am -p1 --directory='net/openvswitch/'
-  fromkern = am -p3 --directory='datapath/'
+  tokern = am -p2 --directory=net/openvswitch --reject
+  fromkern = am -p3 --directory=datapath/ --reject
   compat = am --directory='datapath/linux/compat/'
 [push]
   default = current
