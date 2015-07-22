@@ -91,7 +91,7 @@ function! RunCscope()
     silent cs reset
     redraw!
 endfunction
-map <F9> :call RunCscope()<CR>
+map <F12> :call RunCscope()<CR>
 
 nnoremap ; :
 
