@@ -221,3 +221,8 @@ function tuf()
     sh -c `$@`
     time sh -c 'while [ $? -eq 0 ]; do sleep 0.5; `$@`; done'
 }
+
+function kmake()
+{
+    make C=1 CF="-Wsparse-all -D__CHECKER__ -D__CHECK_ENDIAN__ -Wbitwise" $@
+}
