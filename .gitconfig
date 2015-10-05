@@ -3,6 +3,7 @@
   email = joestringernz@gmail.com
 [core]
   editor = vim
+  abbrev = 12
 [color]
   diff = auto
   ui = true
