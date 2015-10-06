@@ -36,6 +36,7 @@
   fromkern = am -p3 --directory=datapath/ --reject
   compat = am --directory='datapath/linux/compat/'
   mt = merge -s recursive -X theirs
+  tc = tag --contains
 [push]
   default = current
 [sendemail]
