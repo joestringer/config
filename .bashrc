@@ -226,3 +226,34 @@ function kmake()
 {
     make C=1 CF="-Wsparse-all -D__CHECKER__ -D__CHECK_ENDIAN__ -Wbitwise" $@
 }
+
+# Print the log for a commit, with a 'Fixes: xxx ("yyy")' tag added inside.
+#
+# $1 = Git commit ID that introduced the bug
+# $2 = Git commit ID to take the log from (default: HEAD -1)
+function git-fixes()
+{
+    LOG_COMMIT=-1
+    if [ $# -lt 1 ]; then
+        echo "Specify the git commit ID with the original bug."
+    fi
+    if [ $# -ge 2 ]; then
+        LOG_COMMIT=$2
+    fi
+
+    # Place the tag immediately before the Signed-off-by lines.
+    git log --format=%B -n 1 $LOG_COMMIT | sed '/-by/Q'; \
+    git log -1 --pretty=fixes $1; \
+    git log --format=%B -n 1 $LOG_COMMIT | sed -n '/-by/,/$a/p'
+}
+
+# Amend the latest commit with a 'Fixes: xxx ("yyy")' tag.
+#
+# $1 = Git commit ID that introduced the bug
+function git-fixes-amend()
+{
+    if [ $# -lt 1 ]; then
+        echo "Specify the git commit ID with the original bug."
+    fi
+    git commit --amend -m `git-fixes $1`
+}
