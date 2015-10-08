@@ -255,5 +255,5 @@ function git-fixes-amend()
     if [ $# -lt 1 ]; then
         echo "Specify the git commit ID with the original bug."
     fi
-    git commit --amend -m `git-fixes $1`
+    git-fixes $1 | git commit --amend -F -
 }
