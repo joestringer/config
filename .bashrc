@@ -10,7 +10,8 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-if [ "x$(ip netns identify $$)" != "x" ]; then
+ip --help 2>&1 | grep -q netns
+if [ $? -eq 0 ] && ["x$(ip netns identify $$)" != "x" ]; then
     namespace="[$(ip netns identify $$)]"
 fi
 
