@@ -258,3 +258,36 @@ function git-fixes-amend()
     fi
     git-fixes $1 | git commit --amend -F -
 }
+
+# Get the list of tags that contain the commit in a particular repository.
+#
+# $1 = Repository
+# $2 = Git commit ID
+function gtc()
+{
+    DIR_PREFIX=~/git
+
+    if [ $# -lt 2 ]; then
+        echo "usage: gtc <repo> <commit>"
+        return 1;
+    fi
+
+    GIT_PATH=$DIR_PREFIX/$1
+    if [ ! -d $GIT_PATH ]; then
+        echo "path $GIT_PATH does not exist."
+        return 1;
+    fi
+
+    cd $GIT_PATH
+    git tag --contains $2
+    cd -
+}
+
+# Specialized version of "gtc" that searches using the Linux net-next tree,
+# listing the first 5 tags that contain the specific commit.
+#
+# $1 - Git commit ID
+function gtl()
+{
+    gtc net-next $1 | grep -v next | head -n 5
+}
