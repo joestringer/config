@@ -14,6 +14,7 @@
   ci = commit
   cm = commit -m
   cms = commit -s -m
+  cf = commit --fixup
   co = checkout
   cb = checkout -b
   di = diff
