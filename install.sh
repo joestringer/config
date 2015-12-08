@@ -1,6 +1,12 @@
 #!/bin/sh
 
 # Link config files from current directory, excluding unnecessary files.
+if [ $# -lt 1 ] && [ -e ~/.bashrc.local ]; then
+    echo "Looks like everything is already set up!"
+    exit 0
+fi
+
+mv ~/.bashrc ~/.bashrc.old
 for f in `find . -maxdepth 1 \
         \! \( \
             -path '*.' \
@@ -17,3 +23,6 @@ mkdir -p ~/.config/
 for f in `find .config/* -maxdepth 0`; do
     ln -s $PWD/$f ~/.config
 done
+
+# Create .bashrc.local as a signal that we've already run this script
+touch ~/.bashrc.local
