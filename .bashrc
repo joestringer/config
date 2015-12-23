@@ -168,16 +168,25 @@ function gse()
 # Git push upstream with prompts.
 function gpu()
 {
-    echo "Patches between upstream and local master:"
-    git log --oneline --reverse upstream/master..core/master
+    LOCAL_BRANCH=`git rev-parse --abbrev-ref HEAD`
+    BASE_BRANCH=`echo $LOCAL_BRANCH | sed 's/^core\///'`
+
+    echo $LOCAL_BRANCH | grep "^core" 2>&1>/dev/null
+    if [ $? -ne 0 ]; then
+        echo "Branch \"$LOCAL_BRANCH\" is not core; stopping"
+        return
+    fi
+
+    echo "Patches between upstream and local branch:"
+    git log --oneline --reverse upstream/${BASE_BRANCH}..core/${BASE_BRANCH}
     echo
     echo "Have you run 'make check'?"
     echo "Do the patches have their Acks?"
     echo
-    read -r -p "exec 'git push upstream core/master:master'? [y/N] " response
+    read -r -p "exec 'git push upstream core/${BASE_BRANCH}:${BASE_BRANCH}'? [y/N] " response
     case $response in
         [yY])
-            git push upstream core/master:master
+            git push upstream core/${BASE_BRANCH}:${BASE_BRANCH}
             ;;
         *)
             ;;
