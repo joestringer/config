@@ -82,6 +82,9 @@ alias show="git show"
 alias lr="less -r"
 alias :e="vim"
 
+# Disable terminal flow control
+stty -ixon
+
 # Tmux Attach
 function ta() {
     if [ $# -eq 0 ]; then
