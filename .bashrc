@@ -81,6 +81,7 @@ alias gi="git di"
 alias show="git show"
 alias lr="less -r"
 alias :e="vim"
+alias wn="watch -n 0.5"
 
 # Disable terminal flow control
 stty -ixon
