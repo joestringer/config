@@ -122,7 +122,7 @@ function ta() {
 function kt()
 {
     while true; do
-        $*;
+        $@;
         sleep 1;
     done
 }
@@ -167,7 +167,7 @@ function gse()
     read -r -p "Continue? [y/N] " response
     case "$response" in
         [yY])
-            git send-email "$@"
+            git send-email $@
             ;;
         *)
             ;;
