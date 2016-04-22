@@ -112,7 +112,7 @@ function ta() {
         tmux kill-session -t $IDLE
     done
 
-    CLIENTID=$SESSION+`date +%Y%m%d%H%M%S`
+    CLIENTID=$SESSION+$(date +%Y%m%d%H%M%S)
     tmux new-session -d -t $SESSION -s $CLIENTID
     tmux attach-session -t $CLIENTID
     tmux kill-session -t $CLIENTID
@@ -148,7 +148,7 @@ function gr()
     elif [ "$#" -ge "2" ]; then
         grep -r $@
     else
-        echo `grep`
+        echo $(grep)
     fi
 }
 
@@ -177,8 +177,8 @@ function gse()
 # Git push upstream with prompts.
 function gpu()
 {
-    LOCAL_BRANCH=`git rev-parse --abbrev-ref HEAD`
-    BASE_BRANCH=`echo $LOCAL_BRANCH | sed 's/^core\///'`
+    LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    BASE_BRANCH=$(echo $LOCAL_BRANCH | sed 's/^core\///')
 
     if ! echo $LOCAL_BRANCH | grep "^core" 2>&1>/dev/null; then
         echo "Branch \"$LOCAL_BRANCH\" is not core; stopping"
@@ -204,13 +204,12 @@ function gpu()
 # Given current git branch foo.X, create and switch to branch foo.X+1.
 function gcn()
 {
-    branch=`git status | head -n 1 | sed 's/^# *//' | cut -s -d' ' -f 3-`
+    branch=$(git status | head -n 1 | sed 's/^# *//' | cut -s -d' ' -f 3-)
 
-    echo $branch | grep -q '\.'
-    if [ $? -eq 0 ]; then
-        base=`echo $branch | cut -s -d'.' -f -1`
-        version=`echo $branch | cut -s -d'.' -f 2-`
-        new_branch=$base.`echo "$version + 1" | bc -q`
+    if echo $branch | grep -q '\.'; then
+        base=$(echo $branch | cut -s -d'.' -f -1)
+        version=$(echo $branch | cut -s -d'.' -f 2-)
+        new_branch=$base.$(echo "$version + 1" | bc -q)
     else
         if echo $branch | grep -q '_v'; then
             new_branch=$branch".1"
@@ -225,7 +224,7 @@ function gcn()
 #Given current git branch X, create and switch to branch 'X+$1'
 function gcb()
 {
-    branch=`git status | head -n 1 | sed 's/^# *//' | cut -s -d' ' -f 3-`
+    branch=$(git status | head -n 1 | sed 's/^# *//' | cut -s -d' ' -f 3-)
 
     if [ $# -ge 1 ]; then
         git checkout -b "$branch+$1"
@@ -235,8 +234,8 @@ function gcb()
 # Test until Fail.
 function tuf()
 {
-    sh -c `$@`
-    time sh -c 'while [ $? -eq 0 ]; do sleep 0.5; `$@`; done'
+    sh -c $($@)
+    time sh -c 'while [ $? -eq 0 ]; do sleep 0.5; $($@); done'
 }
 
 # Make with sparse and endianness checks.
