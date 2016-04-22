@@ -89,9 +89,9 @@ stty -ixon
 # Tmux Attach
 function ta() {
     if [ $# -eq 0 ]; then
-        SESSION=0;
+        session=0;
     else
-        SESSION=$1
+        session=$1
     fi
 
     # Prevent nesting
@@ -100,22 +100,22 @@ function ta() {
         return 1
     fi
 
-    if ! tmux has-session -t $SESSION; then
-        tmux new-session -d -s $SESSION;
+    if ! tmux has-session -t ${session}; then
+        tmux new-session -d -s ${session};
     fi
 
     # Clear unattached sessions
-    IDLE=$(tmux ls 2>/dev/null \
+    idle=$(tmux ls 2>/dev/null \
            | egrep "^.*\.[0-9]{14}.*[0-9]+\)$" \
            | cut -f 1 -d:)
-    for old_session_id in $IDLE; do
+    for old_session_id in ${idle}; do
         tmux kill-session -t ${old_session_id}
     done
 
-    CLIENTID=$SESSION+$(date +%Y%m%d%H%M%S)
-    tmux new-session -d -t $SESSION -s $CLIENTID
-    tmux attach-session -t $CLIENTID
-    tmux kill-session -t $CLIENTID
+    clientid=$session+$(date +%Y%m%d%H%M%S)
+    tmux new-session -d -t ${session} -s ${clientid}
+    tmux attach-session -t ${clientid}
+    tmux kill-session -t ${clientid}
 }
 
 # Keep trying.
@@ -165,7 +165,7 @@ function gse()
     echo "Which branch is this for?"
     echo
     read -r -p "Continue? [y/N] " response
-    case "$response" in
+    case ${response} in
         [yY])
             git send-email $@
             ;;
@@ -177,24 +177,24 @@ function gse()
 # Git push upstream with prompts.
 function gpu()
 {
-    LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    BASE_BRANCH=$(echo $LOCAL_BRANCH | sed 's/^core\///')
+    local_branch=$(git rev-parse --abbrev-ref HEAD)
+    base_branch=$(echo ${local_branch} | sed 's/^core\///')
 
-    if ! echo $LOCAL_BRANCH | grep "^core" 2>&1>/dev/null; then
-        echo "Branch \"$LOCAL_BRANCH\" is not core; stopping"
+    if ! echo ${local_branch} | grep "^core" 2>&1>/dev/null; then
+        echo "Branch \"${local_branch}\" is not core; stopping"
         return
     fi
 
     echo "Patches between upstream and local branch:"
-    git log --oneline --reverse upstream/${BASE_BRANCH}..core/${BASE_BRANCH}
+    git log --oneline --reverse upstream/${base_branch}..core/${base_branch}
     echo
     echo "Have you run 'make check'?"
     echo "Do the patches have their Acks?"
     echo
-    read -r -p "exec 'git push upstream core/${BASE_BRANCH}:${BASE_BRANCH}'? [y/N] " response
-    case $response in
+    read -r -p "exec 'git push upstream core/${base_branch}:${base_branch}'? [y/N] " response
+    case ${response} in
         [yY])
-            git push upstream core/${BASE_BRANCH}:${BASE_BRANCH}
+            git push upstream core/${base_branch}:${base_branch}
             ;;
         *)
             ;;
@@ -206,28 +206,29 @@ function gcn()
 {
     branch=$(git status | head -n 1 | sed 's/^# *//' | cut -s -d' ' -f 3-)
 
-    if echo $branch | grep -q '\.'; then
-        base=$(echo $branch | cut -s -d'.' -f -1)
-        version=$(echo $branch | cut -s -d'.' -f 2-)
-        new_branch=$base.$(echo "$version + 1" | bc -q)
+    if echo ${branch} | grep -q '\.'; then
+        base=$(echo ${branch} | cut -s -d'.' -f -1)
+        version=$(echo ${branch} | cut -s -d'.' -f 2-)
+        new_branch=${base}.$(echo "${version} + 1" | bc -q)
     else
-        if echo $branch | grep -q '_v'; then
-            new_branch=$branch".1"
+        if echo ${branch} | grep -q '_v'; then
+            new_branch=${branch}".1"
         else
-            new_branch=$branch"_v1.1"
+            new_branch=${branch}"_v1.1"
         fi
     fi
 
-    git checkout -b $new_branch
+    git checkout -b ${new_branch}
 }
 
 #Given current git branch X, create and switch to branch 'X+$1'
 function gcb()
 {
     branch=$(git status | head -n 1 | sed 's/^# *//' | cut -s -d' ' -f 3-)
+    suffix=$1
 
     if [ $# -ge 1 ]; then
-        git checkout -b "$branch+$1"
+        git checkout -b "${branch}+${suffix}"
     fi
 }
 
@@ -250,18 +251,18 @@ function kmake()
 # $2 = Git commit ID to take the log from (default: HEAD -1)
 function git-fixes()
 {
-    LOG_COMMIT=-1
+    log_commit=-1
     if [ $# -lt 1 ]; then
         echo "Specify the git commit ID with the original bug."
     fi
     if [ $# -ge 2 ]; then
-        LOG_COMMIT=$2
+        log_commit=$2
     fi
 
     # Place the tag immediately before the Signed-off-by lines.
-    git log --format=%B -n 1 $LOG_COMMIT | sed '/-by/Q'; \
+    git log --format=%B -n 1 ${log_commit} | sed '/-by/Q'; \
     git log -1 --pretty=fixes $1; \
-    git log --format=%B -n 1 $LOG_COMMIT | sed -n '/-by/,/$a/p'
+    git log --format=%B -n 1 ${log_commit} | sed -n '/-by/,/$a/p'
 }
 
 # Amend the latest commit with a 'Fixes: xxx ("yyy")' tag.
@@ -281,21 +282,23 @@ function git-fixes-amend()
 # $2 = Git commit ID
 function gtc()
 {
-    DIR_PREFIX=~/git
+    dir_prefix=~/git
+    repo=$1
+    commit=$2
 
     if [ $# -lt 2 ]; then
         echo "usage: gtc <repo> <commit>"
         return 1;
     fi
 
-    GIT_PATH=$DIR_PREFIX/$1
-    if [ ! -d $GIT_PATH ]; then
-        echo "path $GIT_PATH does not exist."
+    git_path=${dir_prefix}/${repo}
+    if [ ! -d ${git_path} ]; then
+        echo "path ${git_path} does not exist."
         return 1;
     fi
 
-    cd $GIT_PATH
-    git tag --contains $2
+    cd ${git_path}
+    git tag --contains ${commit}
     cd -
 }
 
