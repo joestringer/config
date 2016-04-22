@@ -105,7 +105,9 @@ function ta() {
     fi
 
     # Clear unattached sessions
-    IDLE=$(tmux ls 2>/dev/null | egrep "^.*\.[0-9]{14}.*[0-9]+\)$" | cut -f 1 -d:)
+    IDLE=$(tmux ls 2>/dev/null \
+           | egrep "^.*\.[0-9]{14}.*[0-9]+\)$" \
+           | cut -f 1 -d:)
     for old_session_id in $IDLE; do
         tmux kill-session -t $IDLE
     done
@@ -139,12 +141,12 @@ function watchmake() {
 # Grep recursive.
 function gr()
 {
-    if [ "$#" == "1" ]
-    then
-        grep -r "$*" . | grep -vE "(cscope|tags|.git|testsuite|_build*)" | grep "$*"
-    elif [ "$#" -ge "2" ]
-    then
-        grep -r $*
+    if [ "$#" == "1" ]; then
+        grep -r $@ . \
+        | grep -vE "(cscope|tags|.git|testsuite|_build*)" \
+        | grep $@
+    elif [ "$#" -ge "2" ]; then
+        grep -r $@
     else
         echo `grep`
     fi
@@ -153,7 +155,8 @@ function gr()
 # Git send email with prompt.
 function gse()
 {
-    if [ `git diff | wc -l` -ne 0 ] || [ `git diff --cached | wc -l` -ne 0 ]; then
+    if [ $(git diff | wc -l) -ne 0 ] \
+       || [ $(git diff --cached | wc -l) -ne 0 ]; then
         echo "There are uncommitted changes in the tree."
         return
     fi
