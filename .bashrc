@@ -10,8 +10,8 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-ip --help 2>&1 | grep -q netns
-if [ $? -eq 0 ] && [ "x$(ip netns identify $$)" != "x" ]; then
+if ip --help 2>&1 | grep -q netns \
+   && [ "x$(ip netns identify $$)" != "x" ]; then
     namespace="[$(ip netns identify $$)]"
 fi
 
@@ -100,8 +100,7 @@ function ta() {
         return 1
     fi
 
-    tmux has-session -t $SESSION
-    if [ $? -ne 0 ]; then
+    if ! tmux has-session -t $SESSION; then
         tmux new-session -d -s $SESSION;
     fi
 
@@ -175,8 +174,7 @@ function gpu()
     LOCAL_BRANCH=`git rev-parse --abbrev-ref HEAD`
     BASE_BRANCH=`echo $LOCAL_BRANCH | sed 's/^core\///'`
 
-    echo $LOCAL_BRANCH | grep "^core" 2>&1>/dev/null
-    if [ $? -ne 0 ]; then
+    if ! echo $LOCAL_BRANCH | grep "^core" 2>&1>/dev/null; then
         echo "Branch \"$LOCAL_BRANCH\" is not core; stopping"
         return
     fi
@@ -208,8 +206,7 @@ function gcn()
         version=`echo $branch | cut -s -d'.' -f 2-`
         new_branch=$base.`echo "$version + 1" | bc -q`
     else
-        echo $branch | grep -q '_v'
-        if [ $? -eq 0 ]; then
+        if echo $branch | grep -q '_v'; then
             new_branch=$branch".1"
         else
             new_branch=$branch"_v1.1"
