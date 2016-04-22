@@ -109,7 +109,7 @@ function ta() {
            | egrep "^.*\.[0-9]{14}.*[0-9]+\)$" \
            | cut -f 1 -d:)
     for old_session_id in $IDLE; do
-        tmux kill-session -t $IDLE
+        tmux kill-session -t ${old_session_id}
     done
 
     CLIENTID=$SESSION+$(date +%Y%m%d%H%M%S)
