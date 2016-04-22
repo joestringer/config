@@ -310,3 +310,21 @@ function gtl()
 {
     gtc net-next $1 | grep -v next | head -n 5
 }
+
+# Fast forward changes to the given commit.
+function gff()
+{
+    git merge --ff-only $1
+}
+
+# Fetch upstream changes from git.
+function gfu()
+{
+    git fetch upstream
+}
+
+# Fetch changes from git origin.
+function gfo()
+{
+    git fetch origin
+}
