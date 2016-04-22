@@ -116,7 +116,7 @@ function ta() {
     tmux kill-session -t $CLIENTID
 }
 
-# Keep trying
+# Keep trying.
 function kt()
 {
     while true; do
@@ -125,6 +125,9 @@ function kt()
     done
 }
 
+# Watch a file for changes and trigger builds when changes are detected.
+#
+# $1 = File to watch
 function watchmake() {
     while true; do
         inotifywait -q -e move $1;
@@ -133,7 +136,7 @@ function watchmake() {
     done
 }
 
-# Grep recursive
+# Grep recursive.
 function gr()
 {
     if [ "$#" == "1" ]
@@ -233,6 +236,7 @@ function tuf()
     time sh -c 'while [ $? -eq 0 ]; do sleep 0.5; `$@`; done'
 }
 
+# Make with sparse and endianness checks.
 function kmake()
 {
     make C=1 CF="-Wsparse-all -D__CHECKER__ -D__CHECK_ENDIAN__ -Wbitwise" $@
