@@ -235,8 +235,7 @@ function gcb()
 # Test until Fail.
 function tuf()
 {
-    sh -c $($@)
-    time sh -c 'while [ $? -eq 0 ]; do sleep 0.5; $($@); done'
+    time while $@; do sleep 0.5; done
 }
 
 # Make with sparse and endianness checks.
