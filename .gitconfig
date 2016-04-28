@@ -6,6 +6,7 @@
   abbrev = 12
 [pretty]
   fixes = Fixes: %h (\"%s\")
+  linux-fmt = %h (\"%s\")
 [color]
   diff = auto
   ui = true

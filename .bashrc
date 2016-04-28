@@ -244,6 +244,14 @@ function kmake()
     make C=1 CF="-Wsparse-all -D__CHECKER__ -D__CHECK_ENDIAN__ -Wbitwise" $@
 }
 
+# Git log one-liner
+#
+# $1 = Git commit ID
+function glo()
+{
+    git log -1 --pretty=linux-fmt $1
+}
+
 # Print the log for a commit, with a 'Fixes: xxx ("yyy")' tag added inside.
 #
 # $1 = Git commit ID that introduced the bug
