@@ -260,7 +260,7 @@ function git-fixes()
 {
     log_commit=-1
     if [ $# -lt 1 ]; then
-        echo "Specify the git commit ID with the original bug."
+        echo "Specify the git commit ID with the original bug." && return
     fi
     if [ $# -ge 2 ]; then
         log_commit=$2
@@ -278,7 +278,7 @@ function git-fixes()
 function git-fixes-amend()
 {
     if [ $# -lt 1 ]; then
-        echo "Specify the git commit ID with the original bug."
+        echo "Specify the git commit ID with the original bug." && return
     fi
     git-fixes $1 | git commit --amend -F -
 }
