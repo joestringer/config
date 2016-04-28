@@ -283,6 +283,56 @@ function git-fixes-amend()
     git-fixes $1 | git commit --amend -F -
 }
 
+function munge-ovs-git-commit-subject()
+{
+    if echo ${1} | grep -q openvswitch; then
+        echo ${1} | sed -e 's/openvswitch/datapath/' -e 's/\.*$/./'
+    else
+        echo "compat: ${1}" | sed 's/\.*$/./'
+    fi
+}
+
+# Print the log for a commit, indented to show it is a backport of an upstream
+# commit. Prepend a subject derived from the original patch, and append an
+# 'Upstream: xxx ("...")' tag.
+#
+# $1 = Git commit ID of original commit upstream
+# $2 = Git commit ID to take the log from (default: HEAD -1)
+function git-upstream()
+{
+    log_commit=-1
+    if [ $# -lt 1 ]; then
+        echo "Specify the git commit ID of the upstream patch." && return
+    fi
+    if [ $# -ge 2 ]; then
+        log_commit=$2
+    fi
+    if [ ${#1} -lt 12 ]; then
+        echo "Original commit \`$1' seems incorrect; specify 12-digit hash." \
+            && return
+    fi
+
+    orig_commit=$(echo ${1} | cut -c1-12)
+    title=$(git log --format=%s -n 1 ${log_commit})
+
+    munge-ovs-git-commit-subject "${title}"
+    echo
+    echo "Upstream commit:"
+    git log --format=%B -n 1 ${log_commit} | sed -e 's/^/    /g' -e 's/^\w$//g'
+    echo "Upstream: ${orig_commit} (\"${title}\")"
+}
+
+# Amend the latest commit with "Upstream commit: ..." pretty-printing and tags.
+#
+# $1 = Git commit ID of original commit upstream
+function git-upstream-amend()
+{
+    if [ $# -lt 1 ]; then
+        echo "Specify the git commit ID of the upstream patch." && return
+    fi
+    git-upstream $1 | git commit --amend -s -F -
+}
+
 # Get the list of tags that contain the commit in a particular repository.
 #
 # $1 = Repository
