@@ -267,9 +267,9 @@ function git-fixes()
     fi
 
     # Place the tag immediately before the Signed-off-by lines.
-    git log --format=%B -n 1 ${log_commit} | sed '/-by/Q'; \
+    git log --format=%B -n 1 ${log_commit} | sed '/^[^ ]*-by/Q'; \
     git log -1 --pretty=fixes $1; \
-    git log --format=%B -n 1 ${log_commit} | sed -n '/-by/,/$a/p'
+    git log --format=%B -n 1 ${log_commit} | sed -n '/^[^ ]*-by/,/$a/p'
 }
 
 # Amend the latest commit with a 'Fixes: xxx ("yyy")' tag.
