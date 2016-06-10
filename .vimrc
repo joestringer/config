@@ -154,6 +154,8 @@ endfunction
 " MinibufExplorer options
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplHideWhenDiff = 1
+let g:miniBufExplMaxSize = 3
 
 " Svndiff()
 hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green'
