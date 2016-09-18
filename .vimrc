@@ -151,6 +151,9 @@ function! HasPaste()
     return ''
 endfunction
 
+" Pathogen
+execute pathogen#infect()
+
 " MinibufExplorer options
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
