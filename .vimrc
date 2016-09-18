@@ -110,27 +110,36 @@ endfunction
 map <F12> :call RunCscope()<CR>
 
 " Highlight characters past column 80
-if version >= 703
-  set cc=80
-elseif version >= 702
-  :au BufWinEnter * let w:m1=matchadd('Search', '\%<81v.\%>77v', -1)
-  :au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-else
-  :match ErrorMsg '\%>80v.\+'
-endif
+augroup HighlightLongLines
+    if version >= 703
+      set cc=80
+    elseif version >= 702
+      :autocmd!
+      :au BufWinEnter * let w:m1=matchadd('Search', '\%<81v.\%>77v', -1)
+      :au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+    else
+      :match ErrorMsg '\%>80v.\+'
+    endif
+augroup END
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd BufWinLeave * call clearmatches()
+augroup WSHighlight
+    autocmd!
+    autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t/
+    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+    autocmd InsertLeave * match ExtraWhitespace /\s\+$\| \+\ze\t/
+    autocmd BufWinLeave * call clearmatches()
+augroup END
 
 " Return to last edit position when opening files (You want this!)
-autocmd BufReadPost *
-     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"" |
-     \ endif
+augroup ReturnLastEdited
+    autocmd!
+    autocmd BufReadPost *
+         \ if line("'\"") > 0 && line("'\"") <= line("$") |
+         \   exe "normal! g`\"" |
+         \ endif
+augroup END
 
 func! CleanupWS()
   exe "normal mz"
@@ -138,14 +147,18 @@ func! CleanupWS()
   exe "normal `z"
 endfunc
 
-" Don't return to last edit position for git commits
-au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
-autocmd Filetype gitcommit setlocal spell textwidth=72
+augroup git
+    autocmd!
+    autocmd Filetype gitcommit setlocal spell textwidth=72
+    " Don't return to last edit position for git commits
+    au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+augroup END
 
-au FileType tex,plaintex let g:miniBufExplVSplit = 20
-au FileType tex,plaintex au BufWinEnter * call clearmatches()
-
-au BufRead,BufNewFile *.go set filetype=go
+augroup latex
+    autocmd!
+    au FileType tex,plaintex let g:miniBufExplVSplit = 20
+    au FileType tex,plaintex au BufWinEnter * call clearmatches()
+augroup END
 
 " Returns true if paste mode is enabled
 function! HasPaste()
