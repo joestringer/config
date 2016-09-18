@@ -2,6 +2,7 @@ set nocompatible    " vim, not vi.. must be first, because it changes other opti
 
 set background=dark
 set modeline
+syntax on
 
 set laststatus=2   " Always show the statusline
 set statusline=%M%h%y\ %t\ %F\ %p%%\ %l/%L\ %=[%{&ff},%{&ft}]\ [a=\%03.3b]\ [h=\%02.2B]\ [%l,%v]
@@ -37,10 +38,27 @@ set cinkeys=0{,0},:,0#,!^F
 set smarttab
 set expandtab
 
+" Don't expand tabs for Makefiles
+augroup UseTabsForMakefiles
+    autocmd!
+    autocmd FileType make setlocal noexpandtab
+augroup END
+
 set gdefault " substitutions apply to entire lines by default
 set nojoinspaces " Don't double-space between sentences
 
 set cscopetag
+
+nnoremap ; :
+
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+if has("autocmd")
+    filetype on
+    filetype indent on
+    filetype plugin on
+endif
 
 " Stop the accidental opening of help when mashing ESC
 inoremap <F1> <ESC>
@@ -63,9 +81,6 @@ function! ToggleAutoWrap()
     endif
 endfunction
 map <F10> :call ToggleAutoWrap()<CR>
-
-" Don't expand tabs for Makefiles
-autocmd FileType make setlocal noexpandtab
 
 let g:taboptions = 'on'
 function! ToggleTabsToSpaces()
@@ -93,17 +108,6 @@ function! RunCscope()
 endfunction
 map <F12> :call RunCscope()<CR>
 
-nnoremap ; :
-
-" Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-if has("autocmd")
-    filetype on
-    filetype indent on
-    filetype plugin on
-endif
-
 " Highlight characters past column 80
 if version >= 703
   set cc=80
@@ -113,7 +117,6 @@ elseif version >= 702
 else
   :match ErrorMsg '\%>80v.\+'
 endif
-syntax on
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$\| \+\ze\t/
