@@ -41,6 +41,8 @@
   compat = am --directory='datapath/linux/compat/'
   mt = merge -s recursive -X theirs
   tc = tag --contains
+  list-authors = shortlog -s -n
+  flog = log --pretty=fuller
 [push]
   default = current
 [sendemail]
