@@ -385,3 +385,20 @@ function gfo()
 {
     git fetch origin
 }
+
+# Wait for N seconds, displaying a countdown timer
+#
+# $1 - Time in seconds to wait
+function countdown()
+{
+    if [ $# -lt 1 ]; then
+        echo "usage: countdown <n_secs>"
+        return 1;
+    fi
+    secs=$1
+    while [ $secs -gt 0 ]; do
+        echo -ne "$secs\033[0K\r"
+        sleep 1
+        : $((secs--))
+    done
+}
