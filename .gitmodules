@@ -15,7 +15,7 @@
 	url = https://github.com/tpope/vim-commentary.git
 [submodule ".vim/bundle/sonicpi.vim"]
 	path = .vim/bundle/sonicpi.vim
-	url = https://github.com/dermusikman/sonicpi.vim.git
+	url = https://github.com/joestringer/sonicpi.vim.git
 [submodule ".vim/bundle/vim-gitgutter"]
 	path = .vim/bundle/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
