@@ -172,3 +172,7 @@ let g:gitgutter_enabled = 0
 noremap <F5> :GitGutterToggle<CR>
 nmap <F3> <Plug>GitGutterPrevHunk
 nmap <F4> <Plug>GitGutterNextHunk
+
+" Airline
+let g:airline_powerline_fonts = 1
+set t_Co=256
