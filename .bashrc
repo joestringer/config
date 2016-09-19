@@ -92,6 +92,7 @@ function ta() {
         session=0;
     else
         session=$1
+        shift 1
     fi
 
     # Prevent nesting
@@ -114,7 +115,7 @@ function ta() {
 
     clientid=$session+$(date +%Y%m%d%H%M%S)
     tmux new-session -d -t ${session} -s ${clientid}
-    tmux attach-session -t ${clientid}
+    tmux attach-session -t ${clientid} $@
     tmux kill-session -t ${clientid}
 }
 
