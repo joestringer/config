@@ -169,10 +169,8 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplHideWhenDiff = 1
 let g:miniBufExplMaxSize = 3
 
-" Svndiff()
-hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green'
-hi DiffDelete   ctermfg=0 ctermbg=1 guibg='red'
-hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow'
-noremap <F3> :call Svndiff("prev")<CR>
-noremap <F4> :call Svndiff("next")<CR>
-noremap <F5> :call Svndiff("clear")<CR>
+" GitGutter
+let g:gitgutter_enabled = 0
+noremap <F5> :GitGutterToggle<CR>
+nmap <F3> <Plug>GitGutterPrevHunk
+nmap <F4> <Plug>GitGutterNextHunk
