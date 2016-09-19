@@ -6,6 +6,8 @@ if [ $# -lt 1 ] && [ -e ~/.bashrc.local ]; then
     exit 0
 fi
 
+git submodule update --init
+
 mv ~/.bashrc ~/.bashrc.old
 for f in `find . -maxdepth 1 \
         \! \( \
