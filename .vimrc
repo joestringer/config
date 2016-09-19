@@ -47,8 +47,6 @@ augroup END
 set gdefault " substitutions apply to entire lines by default
 set nojoinspaces " Don't double-space between sentences
 
-set cscopetag
-
 nnoremap ; :
 let mapleader=","
 

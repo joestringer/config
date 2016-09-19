@@ -3,7 +3,7 @@
 	url = https://github.com/vim-airline/vim-airline
 [submodule ".vim/bundle/cscope_maps"]
 	path = .vim/bundle/cscope_maps
-	url = https://github.com/chrissicool/cscope_maps
+	url = https://github.com/joestringer/cscope_maps
 [submodule ".vim/bundle/vim-fugitive"]
 	path = .vim/bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
