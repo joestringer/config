@@ -176,3 +176,9 @@ nmap <F4> <Plug>GitGutterNextHunk
 " Airline
 let g:airline_powerline_fonts = 1
 set t_Co=256
+
+" Syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
+map <F6> :call SyntasticCheck()<CR>
