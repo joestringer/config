@@ -5,7 +5,7 @@
   editor = vim
   abbrev = 12
 [pretty]
-  fixes = Fixes: %h (\"%s\")
+  fixes = "CC: %an <%ae>%nFixes: %h (\"%s\")"
   linux-fmt = %h (\"%s\")
 [color]
   diff = auto
