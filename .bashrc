@@ -469,12 +469,18 @@ function git-ack()
 }
 
 # Specialized version of "gtc" that searches using the Linux net-next tree,
-# listing the first tagged version that contains the specific commit.
+# listing the first N version tags that contain the specific commit.
 #
 # $1 - Git commit ID
+# $2 - Count of commits to check (default: 1)
 function gtl()
 {
-    gtc net-next $1 | grep "^v" | head -n 1
+    count=1
+    if [ $# -gt 1 ]; then
+        count=$2
+    fi
+
+    gtc net-next $1 | grep -v next | grep "^v" | head -n $count
 }
 
 # Fast forward changes to the given commit.
