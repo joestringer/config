@@ -27,4 +27,10 @@ for f in `find .config/* -maxdepth 0`; do
 done
 
 # Create .bashrc.local as a signal that we've already run this script
-touch ~/.bashrc.local
+for file in \
+    ~/.bashrc.local \
+    ~/.tmux.conf.local \
+    ~/.vimrc.local \
+; do
+    touch file;
+done
