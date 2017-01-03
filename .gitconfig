@@ -52,3 +52,5 @@
   smtpserverport = 587
   smtpencryption = tls
   confirm = always
+[fetch]
+  recurseSubmodules = false
