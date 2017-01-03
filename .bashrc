@@ -362,12 +362,12 @@ function gtc()
 }
 
 # Specialized version of "gtc" that searches using the Linux net-next tree,
-# listing the first 5 tags that contain the specific commit.
+# listing the first tagged version that contains the specific commit.
 #
 # $1 - Git commit ID
 function gtl()
 {
-    gtc net-next $1 | grep -v next | head -n 5
+    gtc net-next $1 | grep "^v" | head -n 1
 }
 
 # Fast forward changes to the given commit.
