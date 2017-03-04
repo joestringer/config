@@ -309,8 +309,8 @@ function git-upstream()
     if [ $# -ge 2 ]; then
         log_commit=$2
     fi
-    if [ ${#1} -lt 12 ]; then
-        echo "Original commit \`$1' seems incorrect; specify 12-digit hash." \
+    if [ ${#1} -lt 20 ]; then
+        echo "Original commit \`$1' seems incorrect; specify full hash." \
             && return
     fi
 
@@ -320,6 +320,10 @@ function git-upstream()
     munge-ovs-git-commit-subject "${title}"
     echo
     echo "Upstream commit:"
+    echo "    commit ${1}"
+    git log --format='Author: %aN <%aE>' -n 1 ${log_commit} | sed -e 's/^/    /g' -e 's/^\w$//g'
+    git log --format='Date: %ad' -n 1 ${log_commit} | sed -e 's/^/    /g' -e 's/^\w$//g'
+    echo ""
     git log --format=%B -n 1 ${log_commit} | sed -e 's/^/    /g' -e 's/^\w$//g'
     echo "Upstream: ${orig_commit} (\"${title}\")"
 }
