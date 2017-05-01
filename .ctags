@@ -2,3 +2,4 @@
 --exclude=_build*
 --exclude=_run*
 --exclude=datapath-windows*
+--exclude=.venv*
