@@ -83,6 +83,7 @@ alias lr="less -r"
 alias :e="vim"
 alias wn="watch -n 0.5"
 alias tmux="tmux -2"
+alias gti="git"
 
 # Disable terminal flow control
 stty -ixon
