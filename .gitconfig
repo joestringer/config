@@ -35,6 +35,7 @@
   ls = diff-tree --no-commit-id --name-only -r
   sr = show --reverse
   lr = log --reverse
+  rv = remote --verbose
   hsow = show
   tokern = am -p2 --directory=net/openvswitch --reject
   fromkern = am -p3 --directory=datapath/ --reject
