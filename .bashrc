@@ -362,7 +362,7 @@ function gtc()
     fi
 
     cd ${git_path}
-    git tag --contains ${commit}
+    git tag --contains ${commit} | sort -V
     cd -
 }
 
