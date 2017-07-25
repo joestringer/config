@@ -38,6 +38,8 @@ set cinkeys=0{,0},:,0#,!^F
 set smarttab
 set expandtab
 
+autocmd FocusGained * :redraw!
+
 " Don't expand tabs for Makefiles
 augroup UseTabsForMakefiles
     autocmd!
