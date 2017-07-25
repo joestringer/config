@@ -337,7 +337,7 @@ function git-upstream-amend()
     if [ $# -lt 1 ]; then
         echo "Specify the git commit ID of the upstream patch." && return
     fi
-    git-upstream $1 | git commit --amend -s -F -
+    git-upstream $1 | git commit --amend --reset-author -s -F -
 }
 
 # Get the list of tags that contain the commit in a particular repository.
