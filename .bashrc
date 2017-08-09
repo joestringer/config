@@ -340,6 +340,52 @@ function git-upstream-amend()
     git-upstream $1 | git commit --amend --reset-author -s -F -
 }
 
+# Print the log for a commit, with a 'Fixes: xxx ("yyy")' tag added inside.
+#
+# $1 = Git commit ID that introduced the bug
+# $2 = Git commit ID to take the log from (default: HEAD -1)
+function git-backports()
+{
+    log_commit=-1
+    if [ $# -lt 1 ]; then
+        echo "Specify the git commit ID with the original bug." && return
+    fi
+    if [ $# -ge 2 ]; then
+        log_commit=$2
+    fi
+
+    # Place the tag immediately before the Signed-off-by lines.
+    git log --format=%B -n 1 ${log_commit} | sed '/^Fixes/Q'; \
+    echo "From master commit $1."; echo; \
+    git log --format=%B -n 1 ${log_commit} | sed -n '/^Fixes/,/$a/p'
+}
+
+# Amend the latest commit with a 'From master commit xxx.' tag.
+#
+# $1 = Git commit ID originally merged upstream.
+function git-backports-amend()
+{
+    if [ $# -lt 1 ]; then
+        echo "Specify the git commit ID originally merged upstream." && return
+    fi
+    git-backports $1 | git commit --amend -F -
+}
+
+# Cherry pick the specified commit from the 'local' remote tree. Adds the line
+# "From master commit xxx." into the message above the "Fixes" tag.
+#
+# $1 = Git commit ID originally merged upstream.
+function gcp()
+{
+    if [ $# -lt 1 ]; then
+        echo "Specify the git commit ID originally merged upstream." && return
+    fi
+
+    git fetch local
+    git cherry-pick $1
+    git-backports-amend $1
+}
+
 # Get the list of tags that contain the commit in a particular repository.
 #
 # $1 = Repository
