@@ -412,6 +412,62 @@ function gtc()
     cd -
 }
 
+# Adds a specified string to all commits from the specified commit to HEAD.
+#
+# $1 - Git commit ID
+# $2 - String to add as newline at end of commit message
+function git-amend-add()
+{
+    commit=$1
+    string=$2
+
+    if [ $# -lt 2 ]; then
+        echo "usage: git-ack <commit> <string>"
+        return 1;
+    fi
+
+    git filter-branch -f --msg-filter "sed '$ a\\$string'" $commit..HEAD
+}
+
+# Adds signoff tags to all commits from the specified commit to HEAD.
+#
+# $1 - Git commit ID
+function git-sign()
+{
+    commit=$1
+    user="$(git config user.name) <$(git config user.email)>"
+
+    if [ $# -lt 1 ]; then
+        echo "usage: git-sign <commit>"
+        return 1;
+    fi
+
+    git-amend-add $commit "Signed-off-by: $user"
+}
+
+# Adds "ack" tags to all commits from the specified commit to HEAD.
+#
+# $1 - Git commit ID
+# $2 - Optional alternative ack string of the form "name <user@domain>"
+function git-ack()
+{
+    commit=$1
+    user=${2:-"$(git config user.name) <$(git config user.email)>"}
+
+    if [ $# -lt 1 ]; then
+        echo "usage: git-ack <commit> [id]"
+        return 1;
+    fi
+
+    ack="Acked-by: $user"
+    if [ $# -gt 1 ]; then
+        echo "Acking with \"$ack\" (CTRL+C to abort)"
+        read -r -n 1
+    fi
+
+    git-amend-add $commit $ack
+}
+
 # Specialized version of "gtc" that searches using the Linux net-next tree,
 # listing the first tagged version that contains the specific commit.
 #
