@@ -524,17 +524,17 @@ function countdown()
 function load_kernel()
 {
     if [ $# -ne 1 ]; then
-        echo "Usage: $0 <kernel>"
+        echo "Usage: load_kernel <kernel>"
         echo;
         echo "Available kernels:"
         ls /boot/vmlinuz-* | cut -d'-' -f2- | sed 's/^/     /'
-        exit 0;
-    fi
+    else
+        version=$1
+        initfs=$(ls /boot/init*${version}*)
 
-    version=$1
-    initfs=$(ls /boot/init*${version}*)
-
-    if kexec -l /boot/vmlinuz-${version} --ramdisk=${initfs} --reuse-cmdline; then
-        echo "Loaded Linux-${version} Run 'kexec -e' to execute it."
+        if kexec -l /boot/vmlinuz-${version} --ramdisk=${initfs} \
+           --reuse-cmdline; then
+            echo "Loaded Linux-${version} Run 'kexec -e' to execute it."
+        fi
     fi
 }
