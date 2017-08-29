@@ -538,3 +538,9 @@ function load_kernel()
         fi
     fi
 }
+
+# List all errno definitions
+function get_errno()
+{
+    cpp -dM /usr/include/errno.h | grep 'define E' | sort -n -k 3
+}
