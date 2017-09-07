@@ -32,5 +32,5 @@ for file in \
     ~/.tmux.conf.local \
     ~/.vimrc.local \
 ; do
-    touch file;
+    touch $file;
 done
