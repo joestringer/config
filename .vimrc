@@ -83,7 +83,7 @@ function! ToggleAutoWrap()
 endfunction
 map <F10> :call ToggleAutoWrap()<CR>
 
-let g:taboptions = 'on'
+let g:taboptions = 'off'
 function! ToggleTabsToSpaces()
     if g:taboptions == 'off'
         set nolist
