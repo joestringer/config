@@ -130,15 +130,30 @@ function kt()
     done
 }
 
-# Watch a file for changes and trigger builds when changes are detected.
+# Watch a file or directory for changes and trigger some action at that time.
+#
+# $1 = File to watch
+# $2+ = Command and arguments
+function watchdo() {
+    local FILE=$1
+    shift
+    while inotifywait -q -r -e attrib $FILE; do
+        eval "$@";
+    done
+}
+
+# Watch a file or directory for changes and trigger builds when it is modified.
 #
 # $1 = File to watch
 function watchmake() {
-    while true; do
-        inotifywait -q -e move $1;
-        make;
-        sleep 1;
-    done
+    watchdo $1 make
+}
+
+# Watch a file or directory for changes and trigger tests when it is modified.
+#
+# $1 = File to watch
+function watchtest() {
+    watchdo $1 make test
 }
 
 # Grep recursive.
