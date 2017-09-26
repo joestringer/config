@@ -33,7 +33,7 @@ set cindent
 set smartindent
 set autoindent
 set tabstop=8
-set shiftwidth=4
+set shiftwidth=8
 set cinkeys=0{,0},:,0#,!^F
 set smarttab
 set expandtab
