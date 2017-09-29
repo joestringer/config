@@ -51,8 +51,8 @@ __prompt_command() {
             fi
             PS1+='\h\[\033[01;33m\]${namespace}'
             PS1+='\[\033[01;34m\] \W '
-            PS1+='\\$'
-            PS1+='\[\033[00m\] '
+            PS1+="\$([ \$? == 0 ] && echo '\[\e[01;32m\]' || echo '\[\e[01;31m\]')"
+            PS1+='\\$\[\033[00m\] '
 
             alias ls='ls --color=auto'
             alias grep='grep --colour=auto'
