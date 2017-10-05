@@ -145,7 +145,7 @@ function kt()
 function watchdo() {
     local FILE=$1
     shift
-    while inotifywait -q -r -e attrib $FILE; do
+    while inotifywait -q -r -e move $FILE; do
         eval "$@";
     done
 }
