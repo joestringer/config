@@ -145,8 +145,19 @@ function kt()
 function watchdo() {
     local FILE=$1
     shift
+
+    local reset='\e[00m'
+    local red='\e[01;31m'
+    local green='\e[01;32m'
+    local yellow='\e[01;33m'
+    echo -e "${yellow}Running '$@' on changes to $FILE ...${reset}"
     while inotifywait -q -r -e move $FILE; do
         eval "$@";
+        if [ $? == 0 ] ; then
+            echo -e "${yellow}$@${reset}: ${green}✔${reset}"
+        else
+            echo -e "${yellow}$@${reset}: ${red}✘${reset}"
+        fi
     done
 }
 
