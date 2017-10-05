@@ -161,7 +161,7 @@ function watchmake() {
 #
 # $1 = File to watch
 function watchtest() {
-    watchdo $1 make test
+    watchdo $1 make tests
 }
 
 # Grep recursive.
