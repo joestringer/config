@@ -276,6 +276,15 @@ function gcb()
     fi
 }
 
+function git-bd()
+{
+    set -e
+
+    local branch=$(git-get-branch)
+    git checkout master
+    git branch -D $branch
+}
+
 # Test until Fail.
 function tuf()
 {
