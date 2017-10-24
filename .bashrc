@@ -211,11 +211,18 @@ function gse()
     esac
 }
 
+# Get the current git branch, or fail out.
+function git-get-branch()
+{
+    set -e
+    git rev-parse --symbolic-full-name --abbrev-ref HEAD
+}
+
 # Git push upstream with prompts.
 function gpu()
 {
-    local_branch=$(git rev-parse --abbrev-ref HEAD)
-    base_branch=$(echo ${local_branch} | sed 's/^core\///')
+    local local_branch=$(git-get-branch)
+    local base_branch=$(echo ${local_branch} | sed 's/^core\///')
 
     if ! echo ${local_branch} | grep "^core" 2>&1>/dev/null; then
         echo "Branch \"${local_branch}\" is not core; stopping"
@@ -241,7 +248,7 @@ function gpu()
 # Given current git branch foo.X, create and switch to branch foo.X+1.
 function gcn()
 {
-    branch=$(git status | head -n 1 | sed 's/^# *//' | cut -s -d' ' -f 3-)
+    local branch=$(git-get-branch)
 
     if echo ${branch} | grep -q '\.'; then
         base=$(echo ${branch} | cut -s -d'.' -f -1)
@@ -261,7 +268,7 @@ function gcn()
 #Given current git branch X, create and switch to branch 'X+$1'
 function gcb()
 {
-    branch=$(git status | head -n 1 | sed 's/^# *//' | cut -s -d' ' -f 3-)
+    local branch=$(git-get-branch)
     suffix=$1
 
     if [ $# -ge 1 ]; then
