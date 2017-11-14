@@ -168,13 +168,6 @@ function watchmake() {
     watchdo $1 make
 }
 
-# Watch a file or directory for changes and trigger tests when it is modified.
-#
-# $1 = File to watch
-function watchtest() {
-    watchdo $1 make tests
-}
-
 # Grep recursive.
 function gr()
 {
