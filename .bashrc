@@ -281,7 +281,10 @@ function git-bd()
 # Test until Fail.
 function tuf()
 {
-    time while $@; do sleep 0.5; done
+    local iter=1
+
+    time while $@; do sleep 0.5 $((iter++)); done
+    echo "Iterated $iter times"
 }
 
 # Make with sparse and endianness checks.
