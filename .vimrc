@@ -36,7 +36,8 @@ set tabstop=8
 set shiftwidth=8
 set cinkeys=0{,0},:,0#,!^F
 set smarttab
-set expandtab
+set noexpandtab
+set list
 
 autocmd FocusGained * :redraw!
 
