@@ -24,6 +24,7 @@ use_color=true
 # globbing instead of external grep binary.
 PROMPT_COMMAND=__prompt_command
 __prompt_command() {
+    time=$(date +'%b %e %R:%S %Z')
     safe_term=${TERM//[^[:alnum:]]/?}   # sanitize TERM
     match_lhs=""
     [[ -f ~/.dir_colors   ]] && match_lhs="${match_lhs}$(<~/.dir_colors)"
@@ -49,8 +50,9 @@ __prompt_command() {
             else
                     PS1+='\[\033[01;32m\]\u@'
             fi
-            PS1+='\h\[\033[01;33m\]${namespace}'
-            PS1+='\[\033[01;34m\] \W '
+            PS1+='\h\[\033[01;33m\]${namespace} '
+            PS1+='\[\033[01;90m\][${time}] '
+            PS1+='\[\033[01;34m\]\W '
             PS1+="\$([ \$? == 0 ] && echo '\[\e[01;32m\]' || echo '\[\e[01;31m\]')"
             PS1+='\\$\[\033[00m\] '
 
