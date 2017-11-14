@@ -102,6 +102,12 @@ function! ToggleTabsToSpaces()
 endfunction
 map <F8> :call ToggleTabsToSpaces()<CR>
 
+function! SetTabs()
+    if g:taboptions == 'on'
+        call ToggleTabsToSpaces()
+    endif
+endfunction
+
 function! RunCscope()
     silent !cscope -R -q -b 2>&1 >/dev/null
     silent !make tags 2>&1 >/dev/null
@@ -159,6 +165,12 @@ augroup latex
     autocmd!
     au FileType tex,plaintex let g:miniBufExplVSplit = 20
     au FileType tex,plaintex au BufWinEnter * call clearmatches()
+augroup END
+
+augroup ft_go
+    autocmd!
+    au FileType go let g:taboptions = 'off'
+    au FileType go au BufReadPre,FileReadPre * call SetTabs()
 augroup END
 
 " Pathogen
