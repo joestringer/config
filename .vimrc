@@ -108,6 +108,12 @@ function! SetTabs()
     endif
 endfunction
 
+function! ClearTabs()
+    if g:taboptions == 'off'
+        call ToggleTabsToSpaces()
+    endif
+endfunction
+
 function! RunCscope()
     silent !cscope -R -q -b 2>&1 >/dev/null
     silent !make tags 2>&1 >/dev/null
@@ -167,10 +173,20 @@ augroup latex
     au FileType tex,plaintex au BufWinEnter * call clearmatches()
 augroup END
 
+augroup ft_yaml
+    autocmd!
+    au FileType yaml let g:taboptions = 'on'
+    au FileType yaml au BufReadPre,FileReadPre * call ClearTabs()
+    au FileType yaml set tabstop=2
+    au FileType yaml set shiftwidth=2
+augroup END
+
 augroup ft_go
     autocmd!
     au FileType go let g:taboptions = 'off'
     au FileType go au BufReadPre,FileReadPre * call SetTabs()
+    au FileType yaml set tabstop=8
+    au FileType yaml set shiftwidth=8
 augroup END
 
 " Pathogen
