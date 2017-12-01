@@ -17,7 +17,7 @@
   cms = commit -s -m
   cf = commit --fixup
   co = checkout
-  cb = checkout -b
+  cb = checkout --no-track -b
   di = diff
   dc = diff --cached
   sb = status -sb
