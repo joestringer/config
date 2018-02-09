@@ -20,6 +20,7 @@
   cb = checkout --no-track -b
   di = diff
   dc = diff --cached
+  cd = diff --cached
   sb = status -sb
   st = stash
   sp = stash pop
