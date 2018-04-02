@@ -209,8 +209,10 @@ function gse()
 # Get the current git branch, or fail out.
 function git-get-branch()
 {
-    set -e
-    git rev-parse --symbolic-full-name --abbrev-ref HEAD
+    (
+        set -e
+        git rev-parse --symbolic-full-name --abbrev-ref HEAD
+    )
 }
 
 # Git push upstream with prompts.
@@ -273,11 +275,13 @@ function gcb()
 
 function git-bd()
 {
-    set -e
+    (
+        set -e
 
-    local branch=$(git-get-branch)
-    git checkout master
-    git branch -D $branch
+        local branch=$(git-get-branch)
+        git checkout master
+        git branch -D $branch
+    )
 }
 
 # Test until Fail.
