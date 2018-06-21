@@ -58,3 +58,5 @@
   recurseSubmodules = false
 [pw]
   server = https://patchwork.ozlabs.org/
+[pager]
+  branch = false
