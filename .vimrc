@@ -181,12 +181,18 @@ augroup ft_yaml
     au FileType yaml set shiftwidth=2
 augroup END
 
+func! GoFmt()
+    !gofmt -w %
+    e!
+endfunc
+
 augroup ft_go
     autocmd!
     au FileType go let g:taboptions = 'off'
     au FileType go au BufReadPre,FileReadPre * call SetTabs()
     au FileType go set tabstop=8
     au FileType go set shiftwidth=8
+    au BufWritePost *.go call GoFmt()
 augroup END
 
 " Pathogen
