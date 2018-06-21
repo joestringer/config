@@ -1,5 +1,5 @@
-–-python-kinds=-i
 --exclude=_build*
 --exclude=_run*
 --exclude=datapath-windows*
 --exclude=.venv*
+--exclude=debian*
