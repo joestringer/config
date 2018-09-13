@@ -45,6 +45,7 @@
   tc = tag --contains
   list-authors = shortlog -s -n
   flog = log --pretty=fuller
+  rbanch = branch
 [push]
   default = current
 [sendemail]
