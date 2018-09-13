@@ -610,3 +610,9 @@ function kan()
 {
     kubectl "$@" --all-namespaces
 }
+
+# Shortcut for "git rc" alias (git rebase --continue ...)
+function gitrc()
+{
+    git rc
+}
