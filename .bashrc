@@ -628,3 +628,39 @@ function undemo()
 {
     export PROMPT_COMMAND=__prompt_command
 }
+
+# count_failures_output looks for lines with the word "pass" in them in the
+# file specified, and prints a count comparing this vs the total number of
+# lines with a rate.
+#
+# $1 - file to use for counting the failures
+function count_failures_output
+{
+    out=$1
+    success=$(grep "pass" $out | wc -l)
+    total=$(cat $out | wc -l)
+    rate=$(awk "BEGIN { print int(${success} / ${total} * 100) }")
+
+    echo
+    echo "Successes: ${success}/${total}; rate: ${rate}%"
+}
+
+# count_failures repeatedly runs the command specified as arguments until the
+# user interrupts the test. Upon interruption, it prints the number of times
+# that the command succeeded/failed.
+#
+# $@ - command + args to run
+function count_failures
+{
+    local out=$(mktemp)
+
+    trap "rm $out"
+    trap "count_failures_output $out" SIGINT
+    while true; do
+        if "$@"; then
+            echo "pass" >> $out
+        else
+            echo "fail" >> $out
+        fi
+    done
+}
