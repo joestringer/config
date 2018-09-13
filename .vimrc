@@ -226,3 +226,9 @@ nmap <Leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <Leader>s :scs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <Leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>
 nmap <Leader>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+" Automatically update copyright notice with current year
+autocmd BufWritePre *
+  \ if &modified |
+  \   exe "g#\\cCopyright \\(".strftime("%Y")."\\)\\@![0-9]\\{4\\}\\(-".strftime("%Y")."\\)\\@!#s#\\([0-9]\\{4\\}\\)\\(-[0-9]\\{4\\}\\)\\?#\\1-".strftime("%Y") |
+  \ endif
