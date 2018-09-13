@@ -592,3 +592,21 @@ function load_kernel()
         fi
     fi
 }
+
+# Shortcut for kubectl
+function k()
+{
+    kubectl "$@"
+}
+
+# Shortcut for kubectl that executes the command in kube-system namespace
+function ks()
+{
+    kubectl "$@" -n kube-system
+}
+
+# Shortcut for kubectl that executes the command in all namespaces
+function kan()
+{
+    kubectl "$@" --all-namespaces
+}
