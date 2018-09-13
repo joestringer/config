@@ -616,3 +616,15 @@ function gitrc()
 {
     git rc
 }
+
+# Drop the PS1 to a basic "$" to simplify shell output for copy/paste somewhere
+function demo()
+{
+    export PROMPT_COMMAND="PS1=\"$ \""
+}
+
+# undemo reverses 'demo'.
+function undemo()
+{
+    export PROMPT_COMMAND=__prompt_command
+}
