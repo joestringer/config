@@ -155,7 +155,7 @@ function watchdo() {
     local green='\e[01;32m'
     local yellow='\e[01;33m'
     echo -e "${yellow}Running '$@' on changes to $FILE ...${reset}"
-    while inotifywait -q -r -e move $FILE; do
+    while inotifywait -q -r -e move -e move_self $FILE; do
         eval "$@";
         if [ $? == 0 ] ; then
             echo -e "${yellow}$@${reset}: ${green}✔${reset}"
