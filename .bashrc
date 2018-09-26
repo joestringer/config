@@ -101,7 +101,7 @@ alias gti="git"
 stty -ixon
 
 # Tmux Attach
-function ta() {
+ta() {
     if [ $# -eq 0 ]; then
         session=0;
     else
@@ -134,7 +134,7 @@ function ta() {
 }
 
 # Keep trying.
-function kt()
+kt()
 {
     while true; do
         $@;
@@ -146,7 +146,7 @@ function kt()
 #
 # $1 = File to watch
 # $2+ = Command and arguments
-function watchdo() {
+watchdo() {
     local FILE=$1
     shift
 
@@ -168,12 +168,12 @@ function watchdo() {
 # Watch a file or directory for changes and trigger builds when it is modified.
 #
 # $1 = File to watch
-function watchmake() {
+watchmake() {
     watchdo $1 make
 }
 
 # Grep recursive.
-function gr()
+gr()
 {
     if [ "$#" == "1" ]; then
         grep -r $@ . \
@@ -187,7 +187,7 @@ function gr()
 }
 
 # Git send email with prompt.
-function gse()
+gse()
 {
     if [ $(git diff | wc -l) -ne 0 ] \
        || [ $(git diff --cached | wc -l) -ne 0 ]; then
@@ -209,7 +209,7 @@ function gse()
 }
 
 # Get the current git branch, or fail out.
-function git-get-branch()
+git-get-branch()
 {
     (
         set -e
@@ -218,7 +218,7 @@ function git-get-branch()
 }
 
 # Git push upstream with prompts.
-function gpu()
+gpu()
 {
     local local_branch=$(git-get-branch)
     local base_branch=$(echo ${local_branch} | sed 's/^core\///')
@@ -245,7 +245,7 @@ function gpu()
 }
 
 # Given current git branch foo.X, create and switch to branch foo.X+1.
-function gcn()
+gcn()
 {
     local branch=$(git-get-branch)
 
@@ -265,7 +265,7 @@ function gcn()
 }
 
 #Given current git branch X, create and switch to branch 'X+$1'
-function gcb()
+gcb()
 {
     local branch=$(git-get-branch)
     suffix=$1
@@ -275,7 +275,7 @@ function gcb()
     fi
 }
 
-function git-bd()
+git-bd()
 {
     (
         set -e
@@ -287,7 +287,7 @@ function git-bd()
 }
 
 # Test until Fail.
-function tuf()
+tuf()
 {
     local iter=1
 
@@ -296,7 +296,7 @@ function tuf()
 }
 
 # Make with sparse and endianness checks.
-function kmake()
+kmake()
 {
     make C=1 CF="-Wsparse-all -D__CHECKER__ -D__CHECK_ENDIAN__ -Wbitwise" $@
 }
@@ -304,7 +304,7 @@ function kmake()
 # Git log one-liner
 #
 # $1 = Git commit ID
-function glo()
+glo()
 {
     git log -1 --pretty=linux-fmt $1
 }
@@ -313,7 +313,7 @@ function glo()
 #
 # $1 = Git commit ID that introduced the bug
 # $2 = Git commit ID to take the log from (default: HEAD -1)
-function git-fixes()
+git-fixes()
 {
     log_commit=-1
     if [ $# -lt 1 ]; then
@@ -332,7 +332,7 @@ function git-fixes()
 # Amend the latest commit with a 'Fixes: xxx ("yyy")' tag.
 #
 # $1 = Git commit ID that introduced the bug
-function git-fixes-amend()
+git-fixes-amend()
 {
     if [ $# -lt 1 ]; then
         echo "Specify the git commit ID with the original bug." && return
@@ -340,7 +340,7 @@ function git-fixes-amend()
     git-fixes $1 | git commit --amend -F -
 }
 
-function munge-ovs-git-commit-subject()
+munge-ovs-git-commit-subject()
 {
     if echo ${1} | grep -q openvswitch; then
         echo ${1} | sed -e 's/openvswitch/datapath/' -e 's/\.*$/./'
@@ -355,7 +355,7 @@ function munge-ovs-git-commit-subject()
 #
 # $1 = Git commit ID of original commit upstream
 # $2 = Git commit ID to take the log from (default: HEAD -1)
-function git-upstream()
+git-upstream()
 {
     log_commit=-1
     if [ $# -lt 1 ]; then
@@ -386,7 +386,7 @@ function git-upstream()
 # Amend the latest commit with "Upstream commit: ..." pretty-printing and tags.
 #
 # $1 = Git commit ID of original commit upstream
-function git-upstream-amend()
+git-upstream-amend()
 {
     if [ $# -lt 1 ]; then
         echo "Specify the git commit ID of the upstream patch." && return
@@ -398,7 +398,7 @@ function git-upstream-amend()
 #
 # $1 = Git commit ID that introduced the bug
 # $2 = Git commit ID to take the log from (default: HEAD -1)
-function git-backports()
+git-backports()
 {
     log_commit=-1
     if [ $# -lt 1 ]; then
@@ -417,7 +417,7 @@ function git-backports()
 # Amend the latest commit with a 'From master commit xxx.' tag.
 #
 # $1 = Git commit ID originally merged upstream.
-function git-backports-amend()
+git-backports-amend()
 {
     if [ $# -lt 1 ]; then
         echo "Specify the git commit ID originally merged upstream." && return
@@ -429,7 +429,7 @@ function git-backports-amend()
 # "From master commit xxx." into the message above the "Fixes" tag.
 #
 # $1 = Git commit ID originally merged upstream.
-function gcp()
+gcp()
 {
     if [ $# -lt 1 ]; then
         echo "Specify the git commit ID originally merged upstream." && return
@@ -444,7 +444,7 @@ function gcp()
 #
 # $1 = Repository
 # $2 = Git commit ID
-function gtc()
+gtc()
 {
     dir_prefix=~/git
     repo=$1
@@ -470,7 +470,7 @@ function gtc()
 #
 # $1 - Git commit ID
 # $2 - String to add as newline at end of commit message
-function git-amend-add()
+git-amend-add()
 {
     commit=$1
     string=$2
@@ -486,7 +486,7 @@ function git-amend-add()
 # Adds signoff tags to all commits from the specified commit to HEAD.
 #
 # $1 - Git commit ID
-function git-sign()
+git-sign()
 {
     commit=$1
     user="$(git config user.name) <$(git config user.email)>"
@@ -503,7 +503,7 @@ function git-sign()
 #
 # $1 - Git commit ID
 # $2 - Optional alternative ack string of the form "name <user@domain>"
-function git-ack()
+git-ack()
 {
     commit=$1
     user=${2:-"$(git config user.name) <$(git config user.email)>"}
@@ -527,7 +527,7 @@ function git-ack()
 #
 # $1 - Git commit ID
 # $2 - Count of commits to check (default: 1)
-function gtl()
+gtl()
 {
     count=1
     if [ $# -gt 1 ]; then
@@ -538,19 +538,19 @@ function gtl()
 }
 
 # Fast forward changes to the given commit.
-function gff()
+gff()
 {
     git merge --ff-only $1
 }
 
 # Fetch upstream changes from git.
-function gfu()
+gfu()
 {
     git fetch upstream
 }
 
 # Fetch changes from git origin.
-function gfo()
+gfo()
 {
     git fetch origin
 }
@@ -558,7 +558,7 @@ function gfo()
 # Wait for N seconds, displaying a countdown timer
 #
 # $1 - Time in seconds to wait
-function countdown()
+countdown()
 {
     if [ $# -lt 1 ]; then
         echo "usage: countdown <n_secs>"
@@ -575,7 +575,7 @@ function countdown()
 # Find a kernel based on a string and load it using kexec
 #
 # $1 - Kernel localversion string to specify kernel
-function load_kernel()
+load_kernel()
 {
     if [ $# -ne 1 ]; then
         echo "Usage: load_kernel <kernel>"
@@ -594,37 +594,37 @@ function load_kernel()
 }
 
 # Shortcut for kubectl
-function k()
+k()
 {
     kubectl "$@"
 }
 
 # Shortcut for kubectl that executes the command in kube-system namespace
-function ks()
+ks()
 {
     kubectl "$@" -n kube-system
 }
 
 # Shortcut for kubectl that executes the command in all namespaces
-function kan()
+kan()
 {
     kubectl "$@" --all-namespaces
 }
 
 # Shortcut for "git rc" alias (git rebase --continue ...)
-function gitrc()
+gitrc()
 {
     git rc
 }
 
 # Drop the PS1 to a basic "$" to simplify shell output for copy/paste somewhere
-function demo()
+demo()
 {
     export PROMPT_COMMAND="PS1=\"$ \""
 }
 
 # undemo reverses 'demo'.
-function undemo()
+undemo()
 {
     export PROMPT_COMMAND=__prompt_command
 }
@@ -634,7 +634,7 @@ function undemo()
 # lines with a rate.
 #
 # $1 - file to use for counting the failures
-function count_failures_output
+count_failures_output()
 {
     out=$1
     success=$(grep "pass" $out | wc -l)
@@ -650,7 +650,7 @@ function count_failures_output
 # that the command succeeded/failed.
 #
 # $@ - command + args to run
-function count_failures
+count_failures()
 {
     local out=$(mktemp)
 
