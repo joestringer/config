@@ -16,6 +16,7 @@
   cm = commit -m
   cms = commit -s -m
   cf = commit --fixup
+  cs = commit --squash
   co = checkout
   cb = checkout --no-track -b
   di = diff
