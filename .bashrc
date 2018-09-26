@@ -69,6 +69,29 @@ __prompt_command() {
     fi
 }
 
+__demo_prompt(){
+    if ${use_color} ; then
+        PS1=""
+        if [ $# -ge 1 ]; then
+            if [[ ${EUID} == 0 ]] ; then
+                    PS1+="\[\033[01;31m\]$@ "
+            else
+                    PS1+="\[\033[01;33m\]$@ "
+            fi
+        fi
+        # Colorize based on success/failure of previous execution
+        PS1+="\$([ \$? == 0 ] && echo '\[\e[01;32m\]' || echo '\[\e[01;31m\]')"
+        PS1+='\$\[\033[00m\] '
+    else
+        if [[ ${EUID} == 0 ]] ; then
+            # show root@ when we don't have colors
+            PS1='\u@\h \W \$ '
+        else
+            PS1='\u@\h \w \$ '
+        fi
+    fi
+}
+
 # Try to keep environment pollution down, EPA loves us.
 unset use_color safe_term match_lhs
 
@@ -621,7 +644,7 @@ gitrc()
 # Drop the PS1 to a basic "$" to simplify shell output for copy/paste somewhere
 demo()
 {
-    export PROMPT_COMMAND="PS1=\"$ \""
+    export PROMPT_COMMAND="__demo_prompt $@"
 }
 
 # undemo reverses 'demo'.
