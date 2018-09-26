@@ -53,6 +53,7 @@ __prompt_command() {
             PS1+='\h\[\033[01;33m\]${namespace} '
             PS1+='\[\033[01;90m\][${time}] '
             PS1+='\[\033[01;34m\]\W '
+            # Colorize based on success/failure of previous execution
             PS1+="\$([ \$? == 0 ] && echo '\[\e[01;32m\]' || echo '\[\e[01;31m\]')"
             PS1+='\$\[\033[00m\] '
 
