@@ -58,8 +58,6 @@ __prompt_command() {
 
             alias ls='ls --color=auto'
             alias grep='grep --colour=auto'
-            alias journalctl='journalctl --no-pager'
-            alias make='make --quiet -j $(getconf _NPROCESSORS_ONLN)'
     else
             if [[ ${EUID} == 0 ]] ; then
                     # show root@ when we don't have colors
@@ -85,6 +83,8 @@ fi
 
 # Personal Settings
 export EDITOR=vim
+alias journalctl='journalctl --no-pager'
+alias make='make --quiet -j $(getconf _NPROCESSORS_ONLN)'
 alias ll="ls -lh"
 alias ll="ls -lha"
 alias nv="nano -v"
