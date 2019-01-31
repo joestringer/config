@@ -22,3 +22,9 @@
 [submodule ".vim/bundle/vim-localrc"]
 	path = .vim/bundle/vim-localrc
 	url = https://github.com/thinca/vim-localrc.git
+[submodule ".vim/bundle/vim-autoadapt"]
+	path = .vim/bundle/vim-autoadapt
+	url = https://github.com/vim-scripts/AutoAdapt
+[submodule ".vim/bundle/ingo-library.vim"]
+	path = .vim/bundle/ingo-library.vim
+	url = https://github.com/vim-scripts/ingo-library
