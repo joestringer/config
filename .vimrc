@@ -45,6 +45,8 @@ autocmd FocusGained * :redraw!
 augroup UseTabsForMakefiles
     autocmd!
     autocmd FileType make setlocal noexpandtab
+    au FileType tex,plaintex set tabstop=8
+    au FileType tex,plaintex set shiftwidth=8
 augroup END
 
 set gdefault " substitutions apply to entire lines by default
@@ -167,18 +169,25 @@ augroup git
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 augroup END
 
-augroup latex
+augroup ft_latex
     autocmd!
-    au FileType tex,plaintex let g:miniBufExplVSplit = 20
     au FileType tex,plaintex au BufWinEnter * call clearmatches()
+    au FileType tex,plaintex au BufReadPre,FileReadPre * call ClearTabs()
+    "au BufReadPre,FileReadPre *.tex call ClearTabs()
+    au FileType tex,plaintex set tabstop=4
+    au FileType tex,plaintex set shiftwidth=4
 augroup END
 
 augroup ft_yaml
     autocmd!
-    au FileType yaml let g:taboptions = 'on'
     au FileType yaml au BufReadPre,FileReadPre * call ClearTabs()
     au FileType yaml set tabstop=2
     au FileType yaml set shiftwidth=2
+augroup END
+
+augroup zip
+    autocmd!
+    au BufEnter *.gz %!gunzip
 augroup END
 
 func! GoFmt()
@@ -188,7 +197,6 @@ endfunc
 
 augroup ft_go
     autocmd!
-    au FileType go let g:taboptions = 'off'
     au FileType go au BufReadPre,FileReadPre * call SetTabs()
     au FileType go set tabstop=8
     au FileType go set shiftwidth=8
