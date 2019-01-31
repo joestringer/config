@@ -11,6 +11,7 @@
   diff = auto
   ui = true
 [alias]
+  praise = blame
   ap = add -p
   ci = commit
   cm = commit -m
