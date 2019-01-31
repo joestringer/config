@@ -113,13 +113,14 @@ alias ll="ls -lh"
 alias ll="ls -lha"
 alias nv="nano -v"
 alias nt="nano -E"
-alias gi="git"
-alias show="git show"
 alias lr="less -r"
 alias :e="vim"
 alias wn="watch -n 0.5"
 alias tmux="tmux -2"
+alias gi="git"
 alias gti="git"
+alias show="git show"
+alias gitap="git ap"
 
 # Disable terminal flow control
 stty -ixon
