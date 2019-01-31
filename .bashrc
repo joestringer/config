@@ -323,7 +323,7 @@ tuf()
 # Make with sparse and endianness checks.
 kmake()
 {
-    make C=1 CF="-Wsparse-all -D__CHECKER__ -D__CHECK_ENDIAN__ -Wbitwise" $@
+    make C=1 CF="-Wsparse-all -D__CHECKER__ -D__CHECK_ENDIAN__ -Wbitwise -Werror" $@
 }
 
 # Git log one-liner
