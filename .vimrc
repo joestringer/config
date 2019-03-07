@@ -117,8 +117,13 @@ function! ClearTabs()
 endfunction
 
 function! RunCscope()
-    silent !cscope -R -q -b 2>&1 >/dev/null
+    let l:cscope_tests = confirm('Do you want cscope to index test files?', "&Yes\n&No", 2)
     silent !make tags 2>&1 >/dev/null
+    if l:cscope_tests != 1
+        silent !sed -i '/.*_test.go$/d' cscope.files
+        silent !rm cscope.*out
+        silent !cscope -R -q -b 2>&1 >/dev/null
+    endif
     silent cs reset
     redraw!
 endfunction
