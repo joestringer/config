@@ -227,6 +227,16 @@ nmap <F4> <Plug>GitGutterNextHunk
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#whitespace#mixed_indent_algo = 2 " spaces after indent
 set t_Co=256
+" tabline at top of window
+let g:airline#themes#molokai#palette = {}
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#buffer_min_count = 2
+" fixes unneccessary redraw, when e.g. opening Gundo window
+let airline#extensions#tabline#ignore_bufadd_pat =
+            \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
 
 " Syntastic
 let g:syntastic_always_populate_loc_list = 1
