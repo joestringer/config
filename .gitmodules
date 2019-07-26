@@ -28,3 +28,6 @@
 [submodule ".vim/bundle/ingo-library.vim"]
 	path = .vim/bundle/ingo-library.vim
 	url = https://github.com/vim-scripts/ingo-library
+[submodule ".vim/bundle/nerdtree"]
+	path = .vim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
