@@ -235,6 +235,12 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 map <F6> :call SyntasticCheck()<CR>:call SyntasticToggleMode()<CR>
 
+" NERDtree
+" auto-close if NERDtree is the last window open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" ^n for toggling
+map <C-n> :NERDTreeToggle<CR>
+
 " Cscope maps
 nmap <Leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <Leader>s :scs find s <C-R>=expand("<cword>")<CR><CR>
