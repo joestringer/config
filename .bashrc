@@ -58,7 +58,7 @@ __prompt_command() {
             PS1+='\$\[\033[00m\] '
 
             alias ls='ls --color=auto'
-            alias grep='grep --colour=auto'
+            alias grep='grep --color=auto'
     else
             if [[ ${EUID} == 0 ]] ; then
                     # show root@ when we don't have colors
