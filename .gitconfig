@@ -23,7 +23,9 @@
   di = diff
   dc = diff --cached
   cd = diff --cached
+  gerp = grep
   sb = status -sb
+  su = status -uno
   st = stash
   sp = stash pop
   si = stash --keep-index
@@ -39,6 +41,7 @@
   sr = show --reverse
   lr = log --reverse
   rv = remote --verbose
+  exclude = !sh -c 'echo "$1" >> .git/info/exclude' -
   hsow = show
   tokern = am -p2 --directory=net/openvswitch --reject
   fromkern = am -p3 --directory=datapath/ --reject
