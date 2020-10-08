@@ -713,3 +713,13 @@ count_failures()
         fi
     done
 }
+
+# cleanup_docker will remove containers that have exited, and dangling images.
+cleanup_docker()
+{
+    docker rm -v $(docker ps -a -q -f status=exited)
+    docker rmi $(docker images -f "dangling=true" -q)
+    docker images --no-trunc | grep '<none>' | awk '{ print $3 }' \
+    | xargs -r docker rmi
+    docker system prune -a -f
+}
