@@ -205,7 +205,7 @@ augroup zip
 augroup END
 
 func! GoFmt()
-    !gofmt -w %
+    !goimports -w %
     e!
 endfunc
 
@@ -215,6 +215,19 @@ augroup ft_go
     au FileType go set tabstop=8
     au FileType go set shiftwidth=8
     au BufWritePost *.go call GoFmt()
+augroup END
+
+func! PyFmt()
+    !autopep8 --in-place --aggressive --aggressive %
+    e!
+endfunc
+
+augroup ft_py
+    autocmd!
+    au FileType py au BufReadPre,FileReadPre * call ClearTabs()
+    au FileType py set tabstop=4
+    au FileType py set shiftwidth=4
+    au BufWritePost *.py call PyFmt()
 augroup END
 
 " Pathogen
