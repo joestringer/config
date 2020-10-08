@@ -122,6 +122,8 @@ alias gi="git"
 alias gti="git"
 alias show="git show"
 alias gitap="git ap"
+alias gsu="git su"
+alias grv="git remote -v"
 
 # Disable terminal flow control
 stty -ixon
@@ -579,6 +581,27 @@ gfu()
 gfo()
 {
     git fetch origin
+}
+
+# Git recent branches. Lists recent branches with recent commit details,
+# ordered by most recent commit.
+#
+# Adapted from version by Daniel Mulholland, based on script by Jason Rudolph.
+# https://gist.github.com/jasonrudolph/1810768
+#
+# $1 - Number of recent branches to list (default 5)
+gb()
+{
+    local n_branches=${1:-5}
+    git branch | grep -v HEAD | sed 's/^\* / /' \
+    | while read b; do \
+        git log --color --format="%ci _%C(magenta) %cr^ %C(bold cyan)$b%Creset^ %s" $b \
+        | head -n 1;
+    done \
+    | sort -r | cut -d_ -f2- | sed 's;origin/;;g' \
+    | awk -F^ -vOFS=^ 'NR{$3=substr($3,1,60)}1' \
+    | head -$n_branches \
+    | column -t -s '^'
 }
 
 # Wait for N seconds, displaying a countdown timer
