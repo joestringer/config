@@ -37,3 +37,6 @@
 [submodule ".vim/bundle/vim-cue"]
 	path = .vim/bundle/vim-cue
 	url = https://github.com/jjo/vim-cue
+[submodule ".vim/bundle/vim-helm"]
+	path = .vim/bundle/vim-helm
+	url = https://github.com/towolf/vim-helm
