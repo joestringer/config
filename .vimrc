@@ -39,6 +39,10 @@ set smarttab
 set noexpandtab
 set list
 
+" Go language settings for taglist.vim
+let s:tlist_def_go_settings = 'go;g:enum;s:struct;u:union;t:type;' .
+                           \ 'v:variable;f:function'
+
 autocmd FocusGained * :redraw!
 
 " Don't expand tabs for Makefiles
@@ -119,9 +123,14 @@ endfunction
 function! RunCscope()
     let l:cscope_tests = confirm('Do you want cscope to index test files?', "&Yes\n&No", 2)
     silent !make tags 2>&1 >/dev/null
+    \ || find . -name "*.c" -o -name "*.h" -o -name "*.cpp" -o -name "*.go" > cscope.files
+    \ && ctags -L cscope.files
+    \ && cscope -R -q -b 2>&1 >/dev/null
+    " Dropped from the above..
+    "\ && sed -i '/.*\/vendor\//d' cscope.files
     if l:cscope_tests != 1
         silent !sed -i '/.*_test.go$/d' cscope.files
-        silent !rm cscope.*out
+        silent !rm -f cscope.*out
         silent !cscope -R -q -b 2>&1 >/dev/null
     endif
     silent cs reset
