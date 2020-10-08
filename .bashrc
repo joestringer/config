@@ -651,7 +651,7 @@ k()
 # Shortcut for kubectl that executes the command in kube-system namespace
 ks()
 {
-    kubectl "$@" -n kube-system
+    kubectl -n kube-system "$@"
 }
 
 # Shortcut for kubectl that executes the command in all namespaces
