@@ -294,6 +294,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " ^n for toggling
 map <C-n> :NERDTreeToggle<CR>
 
+" Delve
+let g:delve_new_command = 'new'
+let g:delve_use_vimux = 1
+
 " Cscope maps
 nmap <Leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <Leader>s :scs find s <C-R>=expand("<cword>")<CR><CR>
