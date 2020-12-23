@@ -40,3 +40,6 @@
 [submodule ".vim/bundle/vim-helm"]
 	path = .vim/bundle/vim-helm
 	url = https://github.com/towolf/vim-helm
+[submodule ".vim/bundle/vim-delve"]
+	path = .vim/bundle/vim-delve
+	url = https://github.com/sebdah/vim-delve
