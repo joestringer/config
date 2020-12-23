@@ -230,8 +230,29 @@ augroup ft_py
     au BufWritePost *.py call PyFmt()
 augroup END
 
-" Pathogen
-execute pathogen#infect()
+" Plugin management
+"call plug#begin('~/.vim/plugged')
+"call plug#end()
+call plug#begin('~/.vim/bundle')
+Plug 'vim-scripts/cscope_maps'
+Plug 'vim-scripts/limelight.vim'
+Plug 'vim-scripts/nerdtree'
+Plug 'vim-scripts/ingo-library.vim'
+Plug 'vim-scripts/minibufexpl.vim'
+Plug 'vim-scripts/sonicpi.vim'
+Plug 'vim-scripts/tmuxline'
+Plug 'vim-scripts/taglist.vim'
+Plug 'vim-scripts/vimux'
+Plug 'vim-scripts/vim-airline'
+Plug 'vim-scripts/vim-autoadapt'
+Plug 'vim-scripts/vim-commentary'
+Plug 'vim-scripts/vim-cue'
+Plug 'vim-scripts/vim-delve'
+Plug 'vim-scripts/vim-localrc'
+Plug 'vim-scripts/vim-fugitive'
+Plug 'vim-scripts/vim-gitgutter'
+Plug 'vim-scripts/vim-helm'
+call plug#end()
 
 " MinibufExplorer options
 let g:miniBufExplModSelTarget = 1
