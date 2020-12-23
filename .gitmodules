@@ -43,3 +43,6 @@
 [submodule ".vim/bundle/vim-delve"]
 	path = .vim/bundle/vim-delve
 	url = https://github.com/sebdah/vim-delve
+[submodule ".vim/bundle/vimux"]
+	path = .vim/bundle/vimux
+	url = https://github.com/benmills/vimux
