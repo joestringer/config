@@ -723,3 +723,20 @@ cleanup_docker()
     | xargs -r docker rmi
     docker system prune -a -f
 }
+
+# The greatest git grep you'll ever see
+ggg()
+{
+    git grep "$@"  -- './*' ':^*svg' ':^*css*' ':^*js' ':^*toml' ':^*lock' ':^*svg' ':^examples/*'
+}
+
+# Edit files added in the latest Git Commit
+egc() {
+  $EDITOR $(git ls HEAD) "$@"
+}
+
+# Github PR Checkout
+gpc()
+{
+    gh pr checkout "$@"
+}
