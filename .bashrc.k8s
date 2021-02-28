@@ -1,0 +1,404 @@
+### Generic kubectl shortcuts ###
+
+# Shortcut for kubectl
+k()
+{
+    kubectl "$@"
+}
+
+# Shortcut for kubectl that executes the command in kube-system namespace
+ks()
+{
+    kubectl -n kube-system "$@"
+}
+
+# Shortcut for kubectl that executes the command in all namespaces
+kan()
+{
+    kubectl "$@" --all-namespaces
+}
+
+# Watch for Kubernetes, All resources
+wka() {
+    watch kubectl get all --all-namespaces -o wide
+}
+
+# Kubectl Get Events (everywhere)
+kge()
+{
+    kubectl get events --sort-by='.lastTimestamp' --all-namespaces
+}
+
+get_k8s_pod()
+{
+    kubectl get pods -l id="$*" -o jsonpath='{.items[0].metadata.name}'
+}
+
+get_k8s_svc()
+{
+    kubectl get svc "$*" -o jsonpath='{.spec.clusterIP}'
+}
+
+k8s_curl_path()
+{
+    pod=$(get_k8s_pod ${1})
+    shift
+
+    kubectl exec ${pod} -- curl -s $*
+}
+
+k8s_curl()
+{
+    pod=$1
+    svc=$(get_k8s_svc ${2})
+    shift; shift
+
+    k8s_curl_path $pod $svc $*
+}
+
+# $1 - container_id
+pod_by_container_id()
+{
+    local container="$1"
+
+    if [ $# -lt 1 ]; then
+        echo "usage: pod_by_container_id <container_id>"
+        return
+    fi
+
+    kubectl get pods --all-namespaces -o json | jq '[ .items[]  | select( .metadata.uid | contains("'$container'")) | .metadata ]'
+}
+
+# Pod By Container ID - shortcut
+pbci()
+{
+    pod_by_container_id "$@"
+}
+
+### Cilium ###
+
+set_cilium_namespace()
+{
+    cilium_ns=$(kubectl --request-timeout 3s get namespaces -o json | jq -r '.items[] | select(.metadata.name == "cilium") | .metadata.name')
+    if [[ $cilium_ns == "cilium" ]]; then
+        export CILIUM_NAMESPACE="cilium"
+    else
+        export CILIUM_NAMESPACE="kube-system"
+    fi
+}
+
+# $1 - namespace
+# $2 - labels
+# $3+ - extra agruments to kubectl
+get_pods_by_label()
+{
+    ns=$1
+    labels=$2
+    shift
+    shift
+    kubectl -n $ns get pods -l "$labels" $@
+}
+
+get_cilium_pod()
+{
+    set_cilium_namespace
+    get_pods_by_label $CILIUM_NAMESPACE k8s-app=cilium | tail -n 1 | sed 's/\([^ ]*\).*$/\1/'
+}
+
+# Get cilium pod on node
+# $1 - node
+gcpn()
+{
+    set_cilium_namespace
+    node=$1
+    get_pods_by_label $CILIUM_NAMESPACE k8s-app=cilium -o wide | grep "$node" | sed 's/\([^ ]*\).*$/\1/'
+}
+
+# Get Cilium and exec in on node
+# $1 - node
+gcx()
+{
+    set_cilium_namespace
+    node=$1
+    shift
+    if [ "$1" == "--" ]; then
+        shift
+    fi
+    req="$@"
+    if [ "$req" == "" ]; then
+        kubectl exec -n $CILIUM_NAMESPACE -ti $(gcpn $node) -- bash
+    else
+        kubectl exec -n $CILIUM_NAMESPACE -ti $(gcpn $node) -- $req
+    fi
+}
+
+# Kube-System Logs for Cilium
+klc()
+{
+    set_cilium_namespace
+    kubectl -n $CILIUM_NAMESPACE logs $(get_cilium_pod) "$@"
+}
+
+# Kubectl eXec in random Cilium pod
+#
+# $1 - Cilium command to run (Optional; omit for shell access)
+kxc()
+{
+    set_cilium_namespace
+    if [ $# -ge 1 ]; then
+        kubectl -n $CILIUM_NAMESPACE exec -ti $(get_cilium_pod) -c cilium-agent -- cilium "$@"
+    else
+        kubectl -n $CILIUM_NAMESPACE exec -ti $(get_cilium_pod) -c cilium-agent -- bash
+    fi
+}
+
+# Kubectl Set cilium Image
+ksi()
+{
+    set_cilium_namespace
+    if [ $# -eq 1 ]; then
+        kubectl -n $CILIUM_NAMESPACE set image daemonset/cilium cilium-agent=$1
+    else
+        >&2 echo "usage: ksi <image>"
+        >&2 echo "  eg: ksi docker.io/cilium/cilium:v1.8.2"
+    fi
+}
+
+# Kubectl Set cilium Image to Local dev image
+ksil()
+{
+    if [ $# -eq 0 ]; then
+        ksi localhost:32000/cilium/cilium:local
+    else
+        >&2 echo "usage: ksil"
+    fi
+}
+
+# Kubectl Set cilium Image to Stable
+ksis()
+{
+    ksi docker.io/cilium/cilium:stable
+}
+
+# Kubectl Restart Cilium
+krc() {
+    set_cilium_namespace
+    kubectl -n $CILIUM_NAMESPACE patch ds cilium -p '{"spec":{"template":{"spec":{"containers":[{"name":"cilium-agent","env":[{"name":"RESTART_","value":"'$(date +%s)'"}]}]}}}}'
+}
+
+k8s_get_cilium()
+{
+    set_cilium_namespace
+    kubectl get pods -n $CILIUM_NAMESPACE -l k8s-app=cilium -o jsonpath='{.items[0].metadata.name}'
+}
+
+# Deploy Connectivity Check
+#
+# $1 - kubectl command (default 'apply')
+dcc() {
+    local command=${1:-apply}
+    echo "Running $command https://raw.githubusercontent.com/cilium/cilium/HEAD/examples/kubernetes/connectivity-check/connectivity-check.yaml"
+    kubectl $command -f https://raw.githubusercontent.com/cilium/cilium/HEAD/examples/kubernetes/connectivity-check/connectivity-check.yaml
+}
+
+# Deploy Proxy Check
+#
+# $1 - kubectl command (default 'apply')
+dpc() {
+    local command=${1:-apply}
+    echo "Running $command https://raw.githubusercontent.com/cilium/cilium/HEAD/examples/kubernetes/connectivity-check/connectivity-check-proxy.yaml"
+    kubectl $command -f https://raw.githubusercontent.com/cilium/cilium/HEAD/examples/kubernetes/connectivity-check/connectivity-check-proxy.yaml
+}
+
+# Deploy 'kind' Cilium (from git)
+dkc() {
+    cilium_path="$GOPATH/src/github.com/cilium/cilium"
+
+    set_cilium_namespace
+    if ! kind get clusters | grep -q kind; then
+        kind create cluster --config=$cilium_path/.github/kind-config.yaml
+    fi
+    helm upgrade -i cilium $cilium_path/install/kubernetes/cilium \
+        --wait \
+        --namespace $CILIUM_NAMESPACE \
+        --set nodeinit.enabled=true \
+        --set kubeProxyReplacement=partial \
+        --set hostServices.enabled=false \
+        --set externalIPs.enabled=true \
+        --set nodePort.enabled=true \
+        --set hostPort.enabled=true \
+        --set ipam.mode=kubernetes
+}
+
+### Cloud deploy convenience wrappers ###
+
+# $1 - EKS cluster name (optional)
+function configure_eks()
+{
+    export KUBECONFIG=~/.kube/config-eks
+    export EKS_CLUSTER="joeks"
+    if [ $# -ge 1 ]; then
+        export EKS_CLUSTER="$1"
+    fi
+    if [ -z "$EKS_CLUSTER" ]; then
+        >&2 echo "$EKS_CLUSTER must be specified."
+        return 1
+    fi
+
+    if [ -z "$AMI_FAMILY" ]; then
+        export AMI_FAMILY="auto"
+    fi
+    if ! eksctl get cluster $EKS_CLUSTER 2>/dev/null; then
+        eksctl create cluster --name $EKS_CLUSTER --without-nodegroup --node-ami-family="$AMI_FAMILY"
+        kubectl -n kube-system delete daemonset aws-node
+    fi
+}
+
+# $1 - number of nodes to scale to
+function eks_scale() {
+    nodes="$1"; shift
+    configure_eks "$@"
+    if [[ $nodes =~ ^[0-9]+$ ]]; then
+        if [[ $(eksctl get nodegroup --cluster joeks -o json) = "null" ]]; then
+            eksctl create nodegroup --cluster $EKS_CLUSTER --nodes $nodes --node-ami-family=$AMI_FAMILY
+        fi
+        export EKS_NODEGROUP=$(eksctl get nodegroup --cluster $EKS_CLUSTER -o json | jq -r '.[0].Name')
+        eksctl scale nodegroup --cluster $EKS_CLUSTER --name $EKS_NODEGROUP --nodes $nodes
+    else
+        echo "Invalid number of nodes \"$nodes\"" >&2
+        echo "usage: eks_scale <nodes> [cluster-name]" >&2
+    fi
+}
+
+function eks()
+{
+    (
+        set -e
+        eks_scale "$@"
+    )
+}
+
+function eks_stop()
+{
+    eksctl delete cluster "$EKS_CLUSTER"
+}
+
+# Scale a (new) GKE cluster up to the specified number of nodes.
+#
+# $1 - number of nodes to scale to
+# $2 - if "--install", install Cilium into the new cluster.
+# $3 - if installing Cilium, Helm target directory
+# $4 - if installing Cilium, target Cilium version to install
+function gke_scale()
+{
+    image_type="ubuntu" # Makes swapping kernels easier. Default: "cos"
+    machine_type="n1-standard-4"
+    nodes="$1"; shift
+    install="$1"; shift
+    if [[ -z "$GKE_PROJECT" ]]; then
+        >&2 echo "$GKE_PROJECT must be defined to install cilium in GKE."
+        return 1
+    fi
+    if [[ -z "$GKE_CLUSTER" ]]; then
+        >&2 echo "$GKE_CLUSTER must be defined to install cilium in GKE."
+        return 1
+    fi
+    if [[ -z "$GKE_ZONE" ]]; then
+        >&2 echo "$GKE_ZONE must be defined to install cilium in GKE."
+        return 1
+    fi
+    if [[ -z "$GKE_USER" ]]; then
+        >&2 echo "$GKE_USER must be defined to install cilium in GKE."
+        return 1
+    fi
+    if [[ $nodes =~ ^0$ ]]; then
+        gke_stop
+        return
+    elif [[ $nodes =~ ^[0-9]+$ ]]; then
+        gcloud container --project $GKE_PROJECT clusters create $GKE_CLUSTER \
+               --username "admin" --image-type $image_type \
+               --machine-type $machine_type --num-nodes $nodes \
+               --zone ${GKE_ZONE}
+    else
+        echo "Invalid number of nodes \"$nodes\"" >&2
+        echo "usage: gke_scale <NODES> [--install [HELM-TARGET [CILIUM-VERSION]]]" >&2
+    fi
+    kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user "$GKE_USER"
+    kubectl create namespace cilium
+
+    export NATIVE_CIDR="$(gcloud container clusters describe "$GKE_CLUSTER" | grep -i clusterIpv4Cidr | awk '{print $2}')"
+
+    if [[ $install = "--install" ]]; then
+        gke_cilium "cilium/cilium" "$@"
+    fi
+}
+
+function gke_env()
+{
+    export CILIUM_NAMESPACE=cilium
+    export NATIVE_CIDR="$(gcloud container clusters describe "$GKE_CLUSTER" | grep -i clusterIpv4Cidr | awk '{print $2}')"
+}
+
+function gkc()
+{
+    nodes="$1"; shift
+    if [[ -z $nodes ]]; then
+        echo "usage: gkc <NODES> [HELM-TARGET [CILIUM-VERSION]]" >&2
+    fi
+    (
+        set -e
+        gke_scale "$nodes" --install "$@"
+    )
+}
+
+function gke_cilium()
+{
+    export CILIUM_NAMESPACE="cilium"
+    local target="${1:-cilium/cilium}"
+    local version=""
+    if [[ $# -ge 2 ]]; then
+        version="--version=$(echo $2 | sed 's/^v//')"
+    fi
+    if [[ -z "$GKE_CLUSTER" ]]; then
+        >&2 echo "$GKE_CLUSTER must be defined to install cilium in GKE."
+        return 1
+    fi
+    (
+        set -e
+        NATIVE_CIDR=$(gcloud container clusters describe $GKE_CLUSTER | grep -i clusterIpv4Cidr | awk '{print $2}')
+        echo "Using native CIDR \"$NATIVE_CIDR\""
+        helm repo add cilium https://helm.cilium.io/
+        helm repo update
+        if [[ ! -z "$CILIUM_LEGACY_HELM" ]]; then
+            helm upgrade -i cilium $target \
+              --namespace cilium \
+              $version \
+              --set global.nodeinit.enabled=true \
+              --set nodeinit.reconfigureKubelet=true \
+              --set nodeinit.removeCbrBridge=true \
+              --set nodeinit.restartPods=true \
+              --set global.cni.binPath=/home/kubernetes/bin \
+              --set global.gke.enabled=true \
+              --set config.ipam=kubernetes \
+              --set global.nativeRoutingCIDR="$NATIVE_CIDR"
+        else
+            helm upgrade -i cilium $target \
+              --namespace cilium \
+              $version \
+              --set nodeinit.enabled=true \
+              --set nodeinit.reconfigureKubelet=true \
+              --set nodeinit.removeCbrBridge=true \
+              --set nodeinit.restartPods=true \
+              --set cni.binPath=/home/kubernetes/bin \
+              --set gke.enabled=true \
+              --set ipam.mode=kubernetes \
+              --set nativeRoutingCIDR="$NATIVE_CIDR"
+        fi
+        kubectl -n cilium rollout status ds/cilium
+    )
+}
+
+function gke_stop()
+{
+    gcloud container --project "$GKE_PROJECT" clusters delete "$GKE_CLUSTER" --zone "$GKE_ZONE"
+}

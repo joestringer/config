@@ -101,6 +101,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Client-specific settings
+if [ -e ~/.bashrc.k8s ]; then
+    source ~/.bashrc.k8s
+fi
 if [ -e ~/.bashrc.local ]; then
     source ~/.bashrc.local
 fi
@@ -640,24 +643,6 @@ load_kernel()
             echo "Loaded Linux-${version} Run 'kexec -e' to execute it."
         fi
     fi
-}
-
-# Shortcut for kubectl
-k()
-{
-    kubectl "$@"
-}
-
-# Shortcut for kubectl that executes the command in kube-system namespace
-ks()
-{
-    kubectl -n kube-system "$@"
-}
-
-# Shortcut for kubectl that executes the command in all namespaces
-kan()
-{
-    kubectl "$@" --all-namespaces
 }
 
 # Shortcut for "git rc" alias (git rebase --continue ...)
