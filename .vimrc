@@ -303,3 +303,16 @@ nmap <Leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <Leader>s :scs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <Leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>
 nmap <Leader>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+" Configure AutoAdapt rules to only apply to certain copyrights
+let s:copyrightText = 'Copyright:\?\%(\s\+\%((C)\|&copy;\|\%xa9\)\)\?\s\+\zs'
+let s:copyrightFrom = '\%('' . strftime("%Y") . ''\)\@!\d\{4}'
+let s:copyrightTo   = '\ze\k\@![^-]\|\(-\%('' . strftime("%Y") . ''\)\@!\d\{4}\)'
+let s:copyrightPattern = '%(Cilium\|Isovalent\|Joe Stringer)\zs'
+let g:AutoAdapt_Rules = [
+    \   {
+    \       'name': 'Copyright notice',
+    \       'patternexpr': '''\c\<' . s:copyrightText . '\(' . s:copyrightFrom . '\)\%(' . s:copyrightTo . '\>\)\(\s*' . s:copyrightPattern . '\)''',
+    \       'replacement': '\=submatch(1) . "-" . strftime("%Y")'
+    \   },
+    \ ]
