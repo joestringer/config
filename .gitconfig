@@ -13,6 +13,7 @@
 [alias]
   praise = blame
   ap = add -p
+  bl = branch -l
   ci = commit
   cm = commit -m
   cms = commit -s -m
@@ -51,6 +52,7 @@
   list-authors = shortlog -s -n
   flog = log --pretty=fuller
   rbanch = branch
+  safe-clean = clean -df --interactive
 [push]
   default = current
 [sendemail]
@@ -66,3 +68,5 @@
   server = https://patchwork.ozlabs.org/
 [pager]
   branch = false
+[diff]
+  renamelimit = 1949
