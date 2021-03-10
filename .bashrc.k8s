@@ -161,6 +161,7 @@ ksi()
     else
         >&2 echo "usage: ksi <image>"
         >&2 echo "  eg: ksi docker.io/cilium/cilium:v1.8.2"
+        return 1
     fi
 }
 
@@ -171,6 +172,7 @@ ksil()
         ksi localhost:32000/cilium/cilium:local
     else
         >&2 echo "usage: ksil"
+        return 1
     fi
 }
 
@@ -267,6 +269,7 @@ function eks_scale() {
     else
         echo "Invalid number of nodes \"$nodes\"" >&2
         echo "usage: eks_scale <nodes> [cluster-name]" >&2
+        return 1
     fi
 }
 
@@ -322,6 +325,7 @@ function gke_scale()
     else
         echo "Invalid number of nodes \"$nodes\"" >&2
         echo "usage: gke_scale <NODES> [--install [HELM-TARGET [CILIUM-VERSION]]]" >&2
+        return 1
     fi
     kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user "$GKE_USER"
     kubectl create namespace cilium
@@ -343,7 +347,8 @@ function gkc()
 {
     nodes="$1"; shift
     if [[ -z $nodes ]]; then
-        echo "usage: gkc <NODES> [HELM-TARGET [CILIUM-VERSION]]" >&2
+        >&2 echo "usage: gkc <NODES> [HELM-TARGET [CILIUM-VERSION]]"
+        return 1
     fi
     (
         set -e
