@@ -169,7 +169,7 @@ ksi()
 ksil()
 {
     if [ $# -eq 0 ]; then
-        ksi localhost:32000/cilium/cilium:local
+        ksi localhost:32000/${DOCKER_DEV_ACCOUNT}/cilium-dev:local
     else
         >&2 echo "usage: ksil"
         return 1
