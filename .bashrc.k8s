@@ -295,7 +295,9 @@ function eks_stop()
 function gke_scale()
 {
     image_type="ubuntu" # Makes swapping kernels easier. Default: "cos"
-    machine_type="n1-standard-4"
+    machine_type="e2-custom-2-4096"
+    disk_type="pd-standard"
+    disk_size="10GB"
     nodes="$1"; shift
     install="$1"; shift
     if [[ -z "$GKE_PROJECT" ]]; then
@@ -321,6 +323,7 @@ function gke_scale()
         gcloud container --project $GKE_PROJECT clusters create $GKE_CLUSTER \
                --username "admin" --image-type $image_type \
                --machine-type $machine_type --num-nodes $nodes \
+	       --disk-type $disk_type --disk-size $disk_size --preemptible \
                --zone ${GKE_ZONE}
     else
         echo "Invalid number of nodes \"$nodes\"" >&2
