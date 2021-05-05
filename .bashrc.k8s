@@ -261,7 +261,7 @@ function eks_scale() {
     nodes="$1"; shift
     configure_eks "$@"
     if [[ $nodes =~ ^[0-9]+$ ]]; then
-        if [[ $(eksctl get nodegroup --cluster joeks -o json) = "null" ]]; then
+        if [[ $(eksctl get nodegroup --cluster joeks -o json) = "[]" ]]; then
             eksctl create nodegroup --cluster $EKS_CLUSTER --nodes $nodes --node-ami-family=$AMI_FAMILY
         fi
         export EKS_NODEGROUP=$(eksctl get nodegroup --cluster $EKS_CLUSTER -o json | jq -r '.[0].Name')
