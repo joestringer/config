@@ -1,0 +1,15 @@
+{
+	"go": {
+		"command": "gopls",
+		"args": ["-remote=auto", "-remote.debug=:0", "-logfile", "/tmp/gopls.log"],
+		"rootPatterns": ["go.mod"],
+		"filetypes": ["go"],
+		"goplsPath": "/home/joe/go/bin/gopls"
+	},
+	"callHierarchy": {
+		"splitCommand": "botright 16 split"
+	},
+	"outline": {
+		"splitCommand": "botright 16 split"
+	}
+}

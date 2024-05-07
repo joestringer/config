@@ -109,7 +109,7 @@ if [ -e ~/.bashrc.local ]; then
 fi
 
 # Personal Settings
-export EDITOR=vim
+export EDITOR=nvim
 alias journalctl='journalctl --no-pager'
 alias make='make --quiet -j $(getconf _NPROCESSORS_ONLN)'
 alias ll="ls -lh"
