@@ -344,3 +344,13 @@ let g:AutoAdapt_Rules = [
     \       'replacement': '\=submatch(1) . "-" . strftime("%Y")'
     \   },
     \ ]
+
+" Window navigation
+nmap <C-Up> :wincmd k<CR>
+nmap <C-Down> :wincmd j<CR>
+nmap <C-Left> :wincmd h<CR>
+nmap <C-Right> :wincmd l<CR>
+
+" Window resize
+nmap <C-S-Up> <C-w>10+<CR>
+nmap <C-S-Down> <C-w>10-<CR>
