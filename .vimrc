@@ -204,6 +204,7 @@ augroup zip
 augroup END
 
 func! GoFmt()
+    !gofmt -w -s %
     !goimports -w %
     e!
 endfunc
