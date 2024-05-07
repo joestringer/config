@@ -126,9 +126,9 @@ gcx()
     fi
     req="$@"
     if [ "$req" == "" ]; then
-        kubectl exec -n $CILIUM_NAMESPACE -ti $(gcpn $node) -- bash
+        kubectl exec -n $CILIUM_NAMESPACE -ti $(gcpn $node) -c cilium-agent -- bash
     else
-        kubectl exec -n $CILIUM_NAMESPACE -ti $(gcpn $node) -- $req
+        kubectl exec -n $CILIUM_NAMESPACE $(gcpn $node) -c cilium-agent -- $req
     fi
 }
 
@@ -168,8 +168,15 @@ ksi()
 # Kubectl Set cilium Image to Local dev image
 ksil()
 {
+    local port="5000"
+    if [[ "$(kubectx -c)" =~ ".*microk8s.*" ]]; then
+        port="32000"
+    fi
+    local image="localhost:$port/${DOCKER_DEV_ACCOUNT:-cilium}/cilium-dev:local"
+
     if [ $# -eq 0 ]; then
-        ksi localhost:32000/${DOCKER_DEV_ACCOUNT}/cilium-dev:local
+        echo "Using $image"
+        ksi $image
     else
         >&2 echo "usage: ksil"
         return 1
@@ -214,7 +221,7 @@ dpc() {
 
 # Deploy 'kind' Cilium (from git)
 dkc() {
-    cilium_path="$GOPATH/src/github.com/cilium/cilium"
+    cilium_path="$HOME/git/cilium"
 
     set_cilium_namespace
     if ! kind get clusters | grep -q kind; then
@@ -247,11 +254,12 @@ function configure_eks()
         return 1
     fi
 
+    local ami_family_arg=""
     if [ -z "$AMI_FAMILY" ]; then
-        export AMI_FAMILY="auto"
+        ami_family_arg="--node-ami-family=$AMI_FAMILY"
     fi
     if ! eksctl get cluster $EKS_CLUSTER 2>/dev/null; then
-        eksctl create cluster --name $EKS_CLUSTER --without-nodegroup --node-ami-family="$AMI_FAMILY"
+        eksctl create cluster --name $EKS_CLUSTER --without-nodegroup $ami_family_arg
         kubectl -n kube-system delete daemonset aws-node
     fi
 }
@@ -261,9 +269,13 @@ function eks_scale() {
     nodes="$1"; shift
     configure_eks "$@"
     if [[ $nodes =~ ^[0-9]+$ ]]; then
+        local ami_family_arg=""
+        if [ -z "$AMI_FAMILY" ]; then
+            ami_family_arg="--node-ami-family=$AMI_FAMILY"
+        fi
         if [[ $(eksctl get nodegroup --cluster joeks -o json) = "[]" ]]; then
             eksctl create nodegroup --cluster $EKS_CLUSTER \
-                --nodes-min 0 --nodes-max $nodes --node-ami-family=$AMI_FAMILY \
+                --nodes-min 0 --nodes-max $nodes $ami_family_arg \
                 --instance-types="t3.medium,t3a.medium" --node-volume-type="gp3" \
                 --node-volume-size="10" --managed --spot
         fi
@@ -304,19 +316,19 @@ function gke_scale()
     nodes="$1"; shift
     install="$1"; shift
     if [[ -z "$GKE_PROJECT" ]]; then
-        >&2 echo "$GKE_PROJECT must be defined to install cilium in GKE."
+        >&2 echo "\$GKE_PROJECT must be defined to install cilium in GKE."
         return 1
     fi
     if [[ -z "$GKE_CLUSTER" ]]; then
-        >&2 echo "$GKE_CLUSTER must be defined to install cilium in GKE."
+        >&2 echo "\$GKE_CLUSTER must be defined to install cilium in GKE."
         return 1
     fi
     if [[ -z "$GKE_ZONE" ]]; then
-        >&2 echo "$GKE_ZONE must be defined to install cilium in GKE."
+        >&2 echo "\$GKE_ZONE must be defined to install cilium in GKE."
         return 1
     fi
     if [[ -z "$GKE_USER" ]]; then
-        >&2 echo "$GKE_USER must be defined to install cilium in GKE."
+        >&2 echo "\$GKE_USER must be defined to install cilium in GKE."
         return 1
     fi
     if [[ $nodes =~ ^0$ ]]; then
@@ -371,7 +383,7 @@ function gke_cilium()
         version="--version=$(echo $2 | sed 's/^v//')"
     fi
     if [[ -z "$GKE_CLUSTER" ]]; then
-        >&2 echo "$GKE_CLUSTER must be defined to install cilium in GKE."
+        >&2 echo "\$GKE_CLUSTER must be defined to install cilium in GKE."
         return 1
     fi
     (
