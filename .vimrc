@@ -366,3 +366,7 @@ endif
 if (has("termguicolors"))
   set termguicolors
 endif
+
+" Debug coc.nvim crashes and failures
+"let g:node_client_debug = 1
+"let $NODE_CLIENT_LOG_FILE = '/tmp/coc-logfile'
