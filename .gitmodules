@@ -59,3 +59,15 @@
 [submodule ".vim/bundle/litee.nvim"]
 	path = .vim/bundle/litee.nvim
 	url = https://github.com/ldelossa/litee.nvim
+[submodule ".vim/bundle/plenary.nvim"]
+	path = .vim/bundle/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim
+[submodule ".vim/bundle/telescope.nvim"]
+	path = .vim/bundle/telescope.nvim
+	url = https://github.com/nvim-telescope/telescope.nvim
+[submodule ".vim/bundle/nvim-treesitter"]
+	path = .vim/bundle/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter
+[submodule ".vim/bundle/telescope-ui-select.nvim"]
+	path = .vim/bundle/telescope-ui-select.nvim
+	url = https://github.com/nvim-telescope/telescope-ui-select.nvim
