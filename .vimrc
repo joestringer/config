@@ -70,11 +70,6 @@ if has("autocmd")
     filetype plugin on
 endif
 
-" Stop the accidental opening of help when mashing ESC
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
-
 set pastetoggle=<F2>
 map <F7> :setlocal spell! spelllang=en_nz<CR>
 
