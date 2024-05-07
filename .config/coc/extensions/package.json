@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "coc-go": ">=1.3.33"
+  }
+}
