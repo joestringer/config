@@ -231,40 +231,52 @@ augroup ft_py
 augroup END
 
 " Plugin management
-"call plug#begin('~/.vim/plugged')
-"call plug#end()
 call plug#begin('~/.vim/bundle')
-Plug 'vim-scripts/cscope_maps'
-Plug 'vim-scripts/limelight.vim'
-Plug 'vim-scripts/nerdtree'
-Plug 'vim-scripts/ingo-library.vim'
-Plug 'vim-scripts/minibufexpl.vim'
-Plug 'vim-scripts/sonicpi.vim'
-Plug 'vim-scripts/tmuxline'
+Plug 'airblade/vim-gitgutter'
+Plug 'benmills/vimux'
+Plug 'edkolev/tmuxline.vim'
+"Plug 'fholgado/minibufexpl.vim'
+"Plug 'hari-rangarajan/CCTree'
+Plug 'inkarkat/vim-AutoAdapt'
+Plug 'inkarkat/vim-ingo-library'
+Plug 'joestringer/cscope_maps'
+Plug 'joestringer/sonicpi.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'jjo/vim-cue', {'for': 'cue'}
+Plug 'ldelossa/litee.nvim' ", { 'do': 'litee.nvim#setup' }
+Plug 'ldelossa/gh.nvim' ", { 'do': 'litee.gh#setup' }
+Plug 'ldelossa/nvim-dap-projects', {'for': 'go'}
+Plug 'mfussenegger/nvim-dap'
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['go', 'c'] }
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim' " TODO: Check if this enables fzf
+Plug 'nvim-telescope/telescope-ui-select.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"Plug 'neovim/nvim-lspconfig'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'scrooloose/nerdtree'
+Plug 'sebdah/vim-delve', {'for': 'go'}
+Plug 'stsewd/sphinx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'thinca/vim-localrc'
+Plug 'towolf/vim-helm'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/taglist.vim'
-Plug 'vim-scripts/vimux'
-Plug 'vim-scripts/vim-airline'
-Plug 'vim-scripts/vim-autoadapt'
-Plug 'vim-scripts/vim-commentary'
-Plug 'vim-scripts/vim-cue'
-Plug 'vim-scripts/vim-delve'
-Plug 'vim-scripts/vim-localrc'
-Plug 'vim-scripts/vim-fugitive'
-Plug 'vim-scripts/vim-gitgutter'
-Plug 'vim-scripts/vim-helm'
 call plug#end()
 
 " MinibufExplorer options
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplHideWhenDiff = 1
-let g:miniBufExplMaxSize = 3
+"let g:miniBufExplModSelTarget = 1
+"let g:miniBufExplMapCTabSwitchBufs = 1
+"let g:miniBufExplHideWhenDiff = 1
+"let g:miniBufExplMaxSize = 3
 
 " GitGutter
 let g:gitgutter_enabled = 0
 noremap <F5> :GitGutterToggle<CR>
-nmap <F3> <Plug>GitGutterPrevHunk
-nmap <F4> <Plug>GitGutterNextHunk
+nmap <F3> <Plug>(GitGutterPrevHunk)
+nmap <F4> <Plug>(GitGutterNextHunk)
 
 " Airline
 let g:airline_powerline_fonts = 1

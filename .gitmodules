@@ -71,3 +71,33 @@
 [submodule ".vim/bundle/telescope-ui-select.nvim"]
 	path = .vim/bundle/telescope-ui-select.nvim
 	url = https://github.com/nvim-telescope/telescope-ui-select.nvim
+[submodule ".vim/bundle/coc.nvim"]
+	path = .vim/bundle/coc.nvim
+	url = https://github.com/neoclide/coc.nvim.git
+[submodule ".vim/bundle/nvim-dap-ui"]
+	path = .vim/bundle/nvim-dap-ui
+	url = https://github.com/rcarriga/nvim-dap-ui.git
+[submodule ".vim/bundle/nvim-dap"]
+	path = .vim/bundle/nvim-dap
+	url = https://github.com/mfussenegger/nvim-dap.git
+[submodule ".vim/bundle/nvim-lspconfig"]
+	path = .vim/bundle/nvim-lspconfig
+	url = https://github.com/neovim/nvim-lspconfig.git
+[submodule ".vim/bundle/sphinx.nvim"]
+	path = .vim/bundle/sphinx.nvim
+	url = https://github.com/stsewd/sphinx.nvim.git
+[submodule ".vim/bundle/tmuxline.vim"]
+	path = .vim/bundle/tmuxline.vim
+	url = https://github.com/edkolev/tmuxline.vim.git
+[submodule ".vim/bundle/vim-AutoAdapt"]
+	path = .vim/bundle/vim-AutoAdapt
+	url = https://github.com/inkarkat/vim-AutoAdapt.git
+[submodule ".vim/bundle/vim-ingo-library"]
+	path = .vim/bundle/vim-ingo-library
+	url = https://github.com/inkarkat/vim-ingo-library.git
+[submodule ".vim/bundle/limelight.vim"]
+	path = .vim/bundle/limelight.vim
+	url = https://github.com/junegunn/limelight.vim.git
+[submodule ".vim/bundle/nvim-dap-projects"]
+	path = .vim/bundle/nvim-dap-projects
+	url = https://github.com/ldelossa/nvim-dap-projects.git
