@@ -46,3 +46,6 @@
 [submodule ".vim/bundle/vimux"]
 	path = .vim/bundle/vimux
 	url = https://github.com/benmills/vimux
+[submodule ".vim/bundle/cctree"]
+	path = .vim/bundle/cctree
+	url = https://github.com/hari-rangarajan/CCTree
