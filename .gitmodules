@@ -49,3 +49,6 @@
 [submodule ".vim/bundle/cctree"]
 	path = .vim/bundle/cctree
 	url = https://github.com/hari-rangarajan/CCTree
+[submodule ".vim/bundle/onedark.vim"]
+	path = .vim/bundle/onedark.vim
+	url = https://github.com/joshdick/onedark.vim
