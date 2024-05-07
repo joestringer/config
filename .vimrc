@@ -3,6 +3,7 @@ set nocompatible    " vim, not vi.. must be first, because it changes other opti
 set background=dark
 set modeline
 syntax on
+colorscheme onedark
 
 set laststatus=2   " Always show the statusline
 set statusline=%M%h%y\ %t\ %F\ %p%%\ %l/%L\ %=[%{&ff},%{&ft}]\ [a=\%03.3b]\ [h=\%02.2B]\ [%l,%v]
