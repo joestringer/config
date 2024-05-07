@@ -302,6 +302,20 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 map <F6> :call SyntasticCheck()<CR>:call SyntasticToggleMode()<CR>
 
+let g:mouse = 'off'
+function! ToggleMouse()
+    if g:mouse  == 'off'
+        set mouse=a
+        let g:mouse = 'on'
+        echo "mouse=auto"
+    else
+        set mouse=
+        let g:mouse = 'off'
+        echo "mouse=off"
+    endif
+endfunction
+map <F9> :call ToggleMouse()<CR>
+
 " NERDtree
 " auto-close if NERDtree is the last window open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
