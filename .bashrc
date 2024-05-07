@@ -128,9 +128,16 @@ alias show="git show"
 alias gitap="git ap"
 alias gsu="git su"
 alias grv="git remote -v"
+alias mka="make kind-image-agent"
+alias flatjson="gron"
 
 # Disable terminal flow control
 stty -ixon
+
+branch_prune() {
+    git remote prune upstream | awk 'NR>2 { sub(/upstream\//, "", $3); print $3 }' | xargs git branch -D
+    git remote prune origin | awk 'NR>2 { sub(/upstream\//, "", $3); print $3 }' | xargs git branch -D
+}
 
 # Tmux Attach
 ta() {
@@ -313,7 +320,7 @@ git-bd()
         set -e
 
         local branch=$(git-get-branch)
-        git checkout master
+        git checkout main
         git branch -D $branch
     )
 }
@@ -596,8 +603,8 @@ gfo()
 # $1 - Number of recent branches to list (default 5)
 gb()
 {
-    local n_branches=${1:-5}
-    git branch | grep -v HEAD | sed 's/^\* / /' \
+    local n_branches=${1:-10}
+    git branch | grep -v HEAD | sed -e 's/^\* / /' -e '/^\+/d' \
     | while read b; do \
         git log --color --format="%ci _%C(magenta) %cr^ %C(bold cyan)$b%Creset^ %s" $b \
         | head -n 1;
