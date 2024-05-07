@@ -14,6 +14,7 @@
   praise = blame
   ap = add -p
   bl = branch -l
+  blae = blame
   ci = commit
   cm = commit -m
   cms = commit -s -m
@@ -25,6 +26,7 @@
   dc = diff --cached
   cd = diff --cached
   gerp = grep
+  pf = push --force-with-lease
   sb = status -sb
   su = status -uno
   st = stash
@@ -39,8 +41,9 @@
   rc = rebase --continue
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   ls = diff-tree --no-commit-id --name-only -r
+  update-submodule = submodule update --remote
   sr = show --reverse
-  lr = log --reverse
+  lr = log --reverse --stat
   rv = remote --verbose
   exclude = !sh -c 'echo "$1" >> .git/info/exclude' -
   hsow = show
@@ -50,11 +53,13 @@
   mt = merge -s recursive -X theirs
   tc = tag --contains
   list-authors = shortlog -s -n
-  flog = log --pretty=fuller
+  flog = log --pretty=fuller --stat
   rbanch = branch
   safe-clean = clean -df --interactive
 [push]
   default = current
+[rebase]
+  updateRefs = true
 [sendemail]
   suppresscc = self
   chainreplyto = false
@@ -70,3 +75,28 @@
   branch = false
 [diff]
   renamelimit = 1949
+  colorMoved = default
+[credential]
+  helper = store
+[gpg]
+  format = ssh
+[tag]
+  gpgsign = true
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+[delta]
+  navigate = true
+  #side-by-side = true
+  features = decorations
+  hyperlinks = true
+  keep-plus-minus-markers = true
+[delta "interactive"]
+  keep-plus-minus-markers = false
+[delta "decorations"]
+  commit-style = raw
+[merge]
+  conflictstyle = diff3
+[credential "https://github.com"]
+  helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+  helper = !/usr/bin/gh auth git-credential

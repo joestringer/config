@@ -169,9 +169,6 @@ ksi()
 ksil()
 {
     local port="5000"
-    if [[ "$(kubectx -c)" =~ ".*microk8s.*" ]]; then
-        port="32000"
-    fi
     local image="localhost:$port/${DOCKER_DEV_ACCOUNT:-cilium}/cilium-dev:local"
 
     if [ $# -eq 0 ]; then
