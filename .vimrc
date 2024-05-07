@@ -217,6 +217,7 @@ augroup ft_go
     au BufWritePost *.go call GoFmt()
 augroup END
 
+
 func! PyFmt()
     !autopep8 --in-place --aggressive --aggressive %
     e!
@@ -229,6 +230,7 @@ augroup ft_py
     au FileType py set shiftwidth=4
     au BufWritePost *.py call PyFmt()
 augroup END
+
 
 " Plugin management
 call plug#begin('~/.vim/bundle')
