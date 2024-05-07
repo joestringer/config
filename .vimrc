@@ -22,7 +22,7 @@ set enc=utf-8 fenc=utf-8 tenc=utf-8   " utf-8 encoding
 set ffs=unix,dos,mac       " default fileformats
 
 set history=3000        " keep 3000 lines of command line history
-set maxmem=25123  " 24 MB -  max mem in Kbyte to use for one buffer.  Max is 2000000
+"set maxmem=25123  " 24 MB -  max mem in Kbyte to use for one buffer.  Max is 2000000
 
 set noautowrite         " don't automagically write on :next
 
