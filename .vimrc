@@ -237,7 +237,6 @@ call plug#begin('~/.vim/bundle')
 Plug 'airblade/vim-gitgutter'
 Plug 'benmills/vimux'
 Plug 'edkolev/tmuxline.vim'
-"Plug 'fholgado/minibufexpl.vim'
 "Plug 'hari-rangarajan/CCTree'
 Plug 'inkarkat/vim-AutoAdapt'
 Plug 'inkarkat/vim-ingo-library'
@@ -266,12 +265,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/taglist.vim'
 call plug#end()
-
-" MinibufExplorer options
-"let g:miniBufExplModSelTarget = 1
-"let g:miniBufExplMapCTabSwitchBufs = 1
-"let g:miniBufExplHideWhenDiff = 1
-"let g:miniBufExplMaxSize = 3
 
 " GitGutter
 let g:gitgutter_enabled = 0
