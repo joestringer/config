@@ -83,16 +83,16 @@
 [tag]
   gpgsign = true
 [interactive]
-  diffFilter = delta --color-only --features=interactive
-[delta]
+  diffFilter = git-delta-snap.delta --color-only --features=interactive
+[git-delta-snap.delta]
   navigate = true
   #side-by-side = true
   features = decorations
   hyperlinks = true
   keep-plus-minus-markers = true
-[delta "interactive"]
+[git-delta-snap.delta "interactive"]
   keep-plus-minus-markers = false
-[delta "decorations"]
+[git-delta-snap.delta "decorations"]
   commit-style = raw
 [merge]
   conflictstyle = diff3
