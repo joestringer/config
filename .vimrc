@@ -15,7 +15,8 @@ set backspace=indent,eol,start  " backspace over all kinds of things
 
 set cmdheight=1         " command line two lines high
 set complete=.,w,b,u,U,t,i,d  " do lots of scanning on tab completion
-set cursorline          " show the cursor line
+set cursorline
+highlight CursorLine gui=underline cterm=underline " show the cursor line
 
 set enc=utf-8 fenc=utf-8 tenc=utf-8   " utf-8 encoding
 set ffs=unix,dos,mac       " default fileformats
@@ -143,6 +144,7 @@ map <F12> :call RunCscope()<CR>
 augroup HighlightLongLines
     if version >= 703
       set cc=80
+      highlight ColorColumn ctermbg=0 guibg=black
     elseif version >= 702
       :autocmd!
       :au BufWinEnter * let w:m1=matchadd('Search', '\%<81v.\%>77v', -1)
@@ -198,6 +200,7 @@ augroup ft_yaml
     au FileType yaml au BufReadPre,FileReadPre * call ClearTabs()
     au FileType yaml set tabstop=2
     au FileType yaml set shiftwidth=2
+    au FileType yaml set cursorcolumn
 augroup END
 
 augroup zip
