@@ -1,2 +1,5 @@
+.config/coc/commands
+.config/coc/memos.json
+.config/coc/lists
 .vim/.netrwhist
 .vim/Powerline_default_default_compatible.cache
