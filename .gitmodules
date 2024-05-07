@@ -52,3 +52,10 @@
 [submodule ".vim/bundle/onedark.vim"]
 	path = .vim/bundle/onedark.vim
 	url = https://github.com/joshdick/onedark.vim
+[submodule ".vim/bundle/gh.nvim"]
+	path = .vim/bundle/gh.nvim
+	url = https://github.com/ldelossa/gh.nvim
+	branch = main
+[submodule ".vim/bundle/litee.nvim"]
+	path = .vim/bundle/litee.nvim
+	url = https://github.com/ldelossa/litee.nvim
