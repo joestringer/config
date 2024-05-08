@@ -248,7 +248,7 @@ Plug 'ldelossa/litee.nvim' ", { 'do': 'litee.nvim#setup' }
 Plug 'ldelossa/gh.nvim' ", { 'do': 'litee.gh#setup' }
 Plug 'ldelossa/nvim-dap-projects', {'for': 'go'}
 Plug 'mfussenegger/nvim-dap'
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'go', 'json', 'markdown', 'sh', 'vim', 'yaml'] }
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'go', 'json', 'markdown', 'sh', 'vim'] }
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim' " TODO: Check if this enables fzf
 Plug 'nvim-telescope/telescope-ui-select.nvim'
