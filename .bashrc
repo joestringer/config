@@ -728,8 +728,24 @@ egc() {
   $EDITOR $(git ls HEAD) "$@"
 }
 
-# Github PR Checkout
-gpc()
+# Git Rebase All
+gra()
 {
-    gh pr checkout "$@"
+    DEFAULT_BRANCH=main
+    UPSTREAM=upstream
+    LOG="../rebase-failed.log"
+
+    echo > "$LOG"
+    for branch in $(git branch | grep -v "$DEFAULT_BRANCH"); do
+        git checkout "$branch";
+        git rebase "$UPSTREAM/$DEFAULT_BRANCH"
+        if [ $? -eq 0 ]; then
+            git checkout "$DEFAULT_BRANCH"
+            git branch -D "$branch"
+        else
+            git rebase --abort
+            git clean -f -d
+            echo "$branch" >> "$LOG"
+        fi
+    done
 }
