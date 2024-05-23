@@ -1,4 +1,5 @@
 .config/coc/commands
+.config/coc/extensions/coc-json-data
 .config/coc/memos.json
 .config/coc/lists
 .vim/.netrwhist
