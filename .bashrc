@@ -729,17 +729,23 @@ egc() {
 }
 
 # Git Rebase All
+#
+# No arguments: Rebase each branch.
+# $1: filter branches by this expression.
 gra()
 {
     DEFAULT_BRANCH=main
     UPSTREAM=upstream
     LOG="../rebase-failed.log"
+    FLAGS=("-v" "-e" "$DEFAULT_BRANCH")
+    if [ $# -ge 1 ]; then
+        FLAGS=("-e" "$1")
+    fi
 
     echo > "$LOG"
-    for branch in $(git branch | grep -v "$DEFAULT_BRANCH"); do
+    for branch in $(git branch | grep "${FLAGS[@]}" | grep -ve '^[+*] '); do
         git checkout "$branch";
-        git rebase "$UPSTREAM/$DEFAULT_BRANCH"
-        if [ $? -eq 0 ]; then
+        if git rebase "$UPSTREAM/$DEFAULT_BRANCH"; then
             git checkout "$DEFAULT_BRANCH"
             git branch -D "$branch"
         else
