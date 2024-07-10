@@ -95,3 +95,6 @@
 [submodule ".vim/bundle/nvim-dap-projects"]
 	path = .vim/bundle/nvim-dap-projects
 	url = https://github.com/ldelossa/nvim-dap-projects.git
+[submodule ".vim/bundle/which-key.nvim"]
+	path = .vim/bundle/which-key.nvim
+	url = https://github.com/folke/which-key.nvim
