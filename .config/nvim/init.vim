@@ -36,10 +36,6 @@ endfunction
       \ <SID>check_back_space() ? "\<C-Space>" :
       \ coc#refresh()
 
-lua require('litee.lib').setup({ tree = { icon_set = "nerd" }, panel = { orientation = "right", panel_size = 50 } })
-lua require('litee.gh').setup({ icon_set = "nerd", map_resize_keys = true, keymaps = { expand = "<space>" }, })
-"lua require('litee.gh').setup({ icon_set = "nerd", map_resize_keys = true, keymaps = { expand = "<space>" }, debug_logging = true, })
-
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 "set foldlevel=1
@@ -48,19 +44,47 @@ set nofoldenable
 " configurations for the mouse setting. Defenestrate that heresy.
 set mouse=
 
-" Telescope-ui-select
-" This is your opts table
-lua require("telescope").setup { extensions = { ["ui-select"] = { require("telescope.themes").get_dropdown { } } } }
-" To get ui-select loaded and working with telescope, you need to call
-" load_extension, somewhere after setup function:
-lua require("telescope").load_extension("ui-select")
-"lua vim.lsp.buf.code_action()
-
-lua require('nvim-dap-projects').search_project_config()
-
 set timeout
 set timeoutlen=150
-lua <<EOF
+
+" Configure lua plugins for the remainder of the config file.
+lua <<END_LUA
+
+require('litee.lib').setup({
+	tree = {
+		icon_set = "nerd"
+	},
+	panel = {
+		orientation = "right",
+		panel_size = 50,
+	},
+})
+require('litee.gh').setup({
+	-- debug_logging = true,
+	icon_set = "nerd",
+	map_resize_keys = true,
+	keymaps = {
+		expand = "<space>"
+	},
+})
+
+-- Telescope-ui-select
+-- This is your opts table
+require("telescope").setup {
+	extensions = {
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown { }
+		}
+	}
+}
+
+-- To get ui-select loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require("telescope").load_extension("ui-select")
+
+-- vim.lsp.buf.code_action()
+require('nvim-dap-projects').search_project_config()
+
 local wk = require('which-key')
 wk.register({
     g = {
@@ -112,4 +136,4 @@ wk.register({
         },
     },
 }, { prefix = "<leader>" })
-EOF
+END_LUA
