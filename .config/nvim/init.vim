@@ -64,7 +64,7 @@ require('litee.gh').setup({
 	icon_set = "nerd",
 	map_resize_keys = true,
 	keymaps = {
-		expand = "<space>"
+		expand = "t"
 	},
 })
 
