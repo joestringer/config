@@ -100,10 +100,34 @@ require ('nvim-treesitter.configs').setup({
 })
 
 -- vim.lsp.buf.code_action()
+local dap, dapui = require("dap"),require("dapui")
+dap.listeners.before.attach.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+  dapui.close()
+end
+dapui.setup()
+vim.fn.sign_define('DapBreakpoint',{ text ='🟥', texthl ='', linehl ='', numhl =''})
+vim.fn.sign_define('DapStopped',{ text ='▶️', texthl ='', linehl ='', numhl =''})
 require('nvim-dap-projects').search_project_config()
 
 local wk = require('which-key')
 wk.add(
+    {
+        "<leader>d", group = "Debug",
+        { "<leader>dt", function() require("dapui").toggle() end, desc = "Toggle dap-ui" },
+        { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Set Breakpoint" },
+        { "<leader>dn", function() require("dap").step_over() end, desc = "Step Over" },
+        { "<leader>dj", function() require("dap").step_into() end, desc = "Step Into" },
+        { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
+    },
     {
         "<leader>gh", group = "GitHub",
         { "<leader>ghpt", desc = "<cmd>GHOpenToPR<cr>" },

@@ -252,6 +252,7 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'go', 'json', 'markdown', 'sh', 'vim'] }
 Plug 'mileszs/ack.vim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-neotest/nvim-nio' " Required by nvim-dap-ui
 Plug 'nvim-telescope/telescope.nvim' " TODO: Check if this enables fzf
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -273,6 +274,9 @@ let g:gitgutter_enabled = 0
 noremap <F5> :GitGutterToggle<CR>
 nmap <F3> <Plug>(GitGutterPrevHunk)
 nmap <F4> <Plug>(GitGutterNextHunk)
+
+nnoremap <F6> :lua require("dapui").toggle()<CR>
+nnoremap <F7> :lua require'dap'.continue()<CR>
 
 " Airline
 let g:airline_powerline_fonts = 1
