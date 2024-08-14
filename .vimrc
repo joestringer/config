@@ -71,7 +71,7 @@ if has("autocmd")
 endif
 
 set pastetoggle=<F2>
-map <F7> :setlocal spell! spelllang=en_nz<CR>
+map <F12> :setlocal spell! spelllang=en_nz<CR>
 
 let g:formatoptions = 'off'
 function! ToggleAutoWrap()
@@ -133,7 +133,6 @@ function! RunCscope()
     silent cs reset
     redraw!
 endfunction
-map <F12> :call RunCscope()<CR>
 
 " Highlight characters past column 80
 augroup HighlightLongLines
@@ -293,7 +292,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-map <F6> :call SyntasticCheck()<CR>:call SyntasticToggleMode()<CR>
 
 let g:mouse = 'off'
 function! ToggleMouse()
