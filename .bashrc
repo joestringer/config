@@ -774,3 +774,30 @@ gra()
         fi
     done
 }
+
+# yaml2json converts yaml into json.
+#
+# $1: filepath to convert [optional]
+# shellcheck disable=SC2120
+yaml2json()
+{
+	if [ $# -ge 1 ]; then
+		yq -o json < "$1"
+	else
+		yq -o json
+	fi
+}
+
+# Yaml Grep
+#
+# $1: filepath to grep [optional]
+# $@: grep arguments
+yg() {
+	if [ -e "$1" ]; then
+		path="$1"; shift
+		yaml2json "$path" | gron | grep "$@"
+	else
+		# shellcheck disable=SC2119
+		yaml2json | gron | grep "$@"
+	fi
+}
