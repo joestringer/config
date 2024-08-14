@@ -25,6 +25,12 @@ nmap <C-]> :call <SID>goto_tag("Definition")<CR>
 nmap gi :call <SID>goto_tag("Implementation")<CR>
 nmap <C-[> :call <SID>goto_tag("References")<CR>
 
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
 " use <tab> for trigger coc autocompletion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1
