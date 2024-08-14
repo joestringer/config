@@ -103,54 +103,51 @@ require ('nvim-treesitter.configs').setup({
 require('nvim-dap-projects').search_project_config()
 
 local wk = require('which-key')
-wk.register({
-    g = {
-        name = "+Git",
-        h = {
-            name = "+Github",
-            c = {
-                name = "+Commits",
-                c = { "<cmd>GHCloseCommit<cr>", "Close" },
-                e = { "<cmd>GHExpandCommit<cr>", "Expand" },
-                o = { "<cmd>GHOpenToCommit<cr>", "Open To" },
-                p = { "<cmd>GHPopOutCommit<cr>", "Pop Out" },
-                z = { "<cmd>GHCollapseCommit<cr>", "Collapse" },
-            },
-            i = {
-                name = "+Issues",
-                p = { "<cmd>GHPreviewIssue<cr>", "Preview" },
-            },
-            l = {
-                name = "+Litee",
-                t = { "<cmd>LTPanel<cr>", "Toggle Panel" },
-            },
-            r = {
-                name = "+Review",
-                b = { "<cmd>GHStartReview<cr>", "Begin" },
-                c = { "<cmd>GHCloseReview<cr>", "Close" },
-                d = { "<cmd>GHDeleteReview<cr>", "Delete" },
-                e = { "<cmd>GHExpandReview<cr>", "Expand" },
-                s = { "<cmd>GHSubmitReview<cr>", "Submit" },
-                z = { "<cmd>GHCollapseReview<cr>", "Collapse" },
-            },
-            p = {
-                name = "+Pull Request",
-                c = { "<cmd>GHClosePR<cr>", "Close" },
-                d = { "<cmd>GHPRDetails<cr>", "Details" },
-                e = { "<cmd>GHExpandPR<cr>", "Expand" },
-                o = { "<cmd>GHOpenPR<cr>", "Open" },
-                p = { "<cmd>GHPopOutPR<cr>", "PopOut" },
-                r = { "<cmd>GHRefreshPR<cr>", "Refresh" },
-                t = { "<cmd>GHOpenToPR<cr>", "Open To" },
-                z = { "<cmd>GHCollapsePR<cr>", "Collapse" },
-            },
-            t = {
-                name = "+Threads",
-                c = { "<cmd>GHCreateThread<cr>", "Create" },
-                n = { "<cmd>GHNextThread<cr>", "Next" },
-                t = { "<cmd>GHToggleThread<cr>", "Toggle" },
-            },
-        },
+wk.add(
+    {
+        "<leader>gh", group = "GitHub",
+        { "<leader>ghpt", desc = "<cmd>GHOpenToPR<cr>" },
+        { "<leader>ghpe", desc = "<cmd>GHExpandPR<cr>" },
+        { "<leader>ghpp", desc = "<cmd>GHPopOutPR<cr>" },
     },
-}, { prefix = "<leader>" })
+    {
+        "<leader>ghi", group = "Issues",
+        { "<leader>ghip", desc = "<cmd>GHPreviewIssue<cr>" },
+    },
+    {
+        "<leader>ght", group = "Threads",
+        { "<leader>ghtc", desc = "<cmd>GHCreateThread<cr>" },
+        { "<leader>ghtn", desc = "<cmd>GHNextThread<cr>" },
+        { "<leader>ghtt", desc = "<cmd>GHToggleThread<cr>" },
+    },
+    {
+        "<leader>ghr", group = "Review",
+        { "<leader>ghrb", desc = "<cmd>GHStartReview<cr>" },
+        { "<leader>ghre", desc = "<cmd>GHExpandReview<cr>" },
+        { "<leader>ghrz", desc = "<cmd>GHCollapseReview<cr>" },
+        { "<leader>ghrd", desc = "<cmd>GHDeleteReview<cr>" },
+        { "<leader>ghrc", desc = "<cmd>GHCloseReview<cr>" },
+        { "<leader>ghrs", desc = "<cmd>GHSubmitReview<cr>" },
+    },
+    {
+        "<leader>ghc", group = "Commits",
+        { "<leader>ghco", desc = "<cmd>GHOpenToCommit<cr>" },
+        { "<leader>ghce", desc = "<cmd>GHExpandCommit<cr>" },
+        { "<leader>ghcc", desc = "<cmd>GHCloseCommit<cr>" },
+        { "<leader>ghcp", desc = "<cmd>GHPopOutCommit<cr>" },
+        { "<leader>ghcz", desc = "<cmd>GHCollapseCommit<cr>" }
+    },
+    {
+        "<leader>ghp", group = "Pull Request",
+        { "<leader>ghpo", desc = "<cmd>GHOpenPR<cr>" },
+        { "<leader>ghpd", desc = "<cmd>GHPRDetails<cr>" },
+        { "<leader>ghpr", desc = "<cmd>GHRefreshPR<cr>" },
+        { "<leader>ghpz", desc = "<cmd>GHCollapsePR<cr>" },
+        { "<leader>ghpc", desc = "<cmd>GHClosePR<cr>" },
+    },
+    {
+        "<leader>ghl", group = "Litee",
+        { "<leader>ghlt", desc = "<cmd>LTPanel<cr>" },
+    }
+)
 END_LUA
