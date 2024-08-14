@@ -235,6 +235,7 @@ augroup END
 call plug#begin('~/.vim/bundle')
 Plug 'airblade/vim-gitgutter'
 Plug 'benmills/vimux'
+Plug 'echasnovski/mini.nvim'
 Plug 'edkolev/tmuxline.vim'
 "Plug 'hari-rangarajan/CCTree'
 Plug 'folke/which-key.nvim'

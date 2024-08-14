@@ -61,6 +61,7 @@ set timeoutlen=150
 " Configure lua plugins for the remainder of the config file.
 lua <<END_LUA
 
+require('mini.icons').setup()
 require('litee.lib').setup({
 	tree = {
 		icon_set = "nerd"
