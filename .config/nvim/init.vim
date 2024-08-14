@@ -94,6 +94,11 @@ require("telescope").setup {
 -- load_extension, somewhere after setup function:
 require("telescope").load_extension("ui-select")
 
+require ('nvim-treesitter.configs').setup({
+  -- A list of parser names, or "all" (the five listed parsers should always be installed)
+  ensure_installed = { "c", "go", "lua", "vim", "vimdoc" },
+})
+
 -- vim.lsp.buf.code_action()
 require('nvim-dap-projects').search_project_config()
 
