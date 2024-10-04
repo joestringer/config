@@ -6,6 +6,10 @@
 		"filetypes": ["go"],
 		"goplsPath": "/home/joe/go/bin/gopls"
 	},
+	"clangd": {
+		"enabled": "true",
+		"arguments": ["--background-index", "--clang-tidy"]
+	},
 	"callHierarchy": {
 		"splitCommand": "botright 16 split"
 	},

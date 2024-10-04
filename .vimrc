@@ -249,7 +249,7 @@ Plug 'ldelossa/litee.nvim' ", { 'do': 'litee.nvim#setup' }
 Plug 'ldelossa/gh.nvim' ", { 'do': 'litee.gh#setup' }
 Plug 'ldelossa/nvim-dap-projects', {'for': 'go'}
 Plug 'mfussenegger/nvim-dap'
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'go', 'json', 'markdown', 'sh', 'vim'] }
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'cpp', 'go', 'json', 'markdown', 'sh', 'vim'] }
 Plug 'mileszs/ack.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-neotest/nvim-nio' " Required by nvim-dap-ui
