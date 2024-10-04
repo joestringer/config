@@ -595,24 +595,6 @@ gfo()
     git fetch origin
 }
 
-git_log_with_date() {
-    b="$1"
-    prefix=" "
-    if [ -n "$2" ]; then
-        prefix="$2"
-    fi
-    git log --color --format="%ci _%C(magenta)$prefix %cr^ %C(bold cyan)$b%Creset^ %s" "$b" \
-    | head -n 1;
-}
-
-git_sort_format_branches() {
-    n_branches="$1"
-    sort -r | cut -d_ -f2- | sed 's;origin/;;g' \
-    | awk -F^ -vOFS=^ 'NR{$3=substr($3,1,60)}1' \
-    | head -"$n_branches" \
-    | column -t -s '^'
-}
-
 # Git recent branches. Lists recent branches with recent commit details,
 # ordered by most recent commit.
 #
@@ -623,16 +605,13 @@ git_sort_format_branches() {
 gb()
 {
     local n_branches=${1:-10}
-    git branch | sed -e '/^\+/d' \
-    | while read -r b; do \
-        if echo "$b" | grep -q '^\*'; then
-            branch=$(echo "$b" | sed 's/^\* //')
-            git_log_with_date "$branch" "*"
-        else
-            git_log_with_date "$b"
-        fi
-    done \
-    | git_sort_format_branches "$n_branches"
+    git for-each-ref \
+        --color \
+        --sort=-committerdate \
+        --format="%(color:magenta)%(committerdate:relative)^%(color:bold cyan)%(refname:short)^%(color:reset)%(contents:subject)" \
+        refs/heads/ \
+    | head -"$n_branches" \
+    | column -t -s '^'
 }
 
 # Wait for N seconds, displaying a countdown timer
