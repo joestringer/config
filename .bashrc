@@ -111,6 +111,7 @@ fi
 # Personal Settings
 export EDITOR=nvim
 export GOTOOLCHAIN='path'
+export ACK_PAGER_COLOR="${PAGER:-less -R}"
 alias journalctl='journalctl --no-pager'
 alias make='make --quiet -j $(getconf _NPROCESSORS_ONLN)'
 alias ll="ls -lh"
