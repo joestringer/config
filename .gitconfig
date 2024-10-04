@@ -57,6 +57,7 @@
   rbanch = branch
   safe-clean = clean -df --interactive
   common = merge-base
+  ftech = fetch
 [push]
   default = current
 [rebase]
