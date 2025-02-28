@@ -5,7 +5,7 @@ source ~/.vimrc
 " TODO: Figure out how to calm CoC down when there's no lsp
 set tagfunc=CocTagFunc
 
-map <C-s> :CocCommand document.showIncomingCalls<CR>
+map <C-i> :CocCommand document.showIncomingCalls<CR>
 map <C-n> :CocCommand document.showOutgoingCalls<CR>
 
 function! s:goto_tag(tagkind) abort
