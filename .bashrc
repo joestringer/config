@@ -486,7 +486,7 @@ gcp()
 # $2 = Git commit ID
 gtc()
 {
-    dir_prefix=~/git
+    GIT_PATH="${GIT_PATH:-~/git}"
     repo=$1
     commit=$2
 
@@ -495,9 +495,9 @@ gtc()
         return 1;
     fi
 
-    git_path=${dir_prefix}/${repo}
-    if [ ! -d ${git_path} ]; then
-        echo "path ${git_path} does not exist."
+    git_path=${GIT_PATH}/${repo}
+    if [ ! -d "${GIT_PATH}/${repo}" ]; then
+        echo "path ${GIT_PATH}/${repo} does not exist."
         return 1;
     fi
 
@@ -574,7 +574,7 @@ gtl()
         count=$2
     fi
 
-    gtc net-next $1 | grep -v next | grep "^v" | head -n $count
+    gtc linux $1 | grep -v next | grep "^v" | head -n $count
 }
 
 # Fast forward changes to the given commit.
