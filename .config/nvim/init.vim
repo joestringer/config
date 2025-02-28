@@ -38,13 +38,13 @@ function! CheckBackspace() abort
 endfunction
 
 :inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ coc#pum#visible() ? "\<C-n>" :
       \ CheckBackspace() ? "\<TAB>" :
       \ coc#refresh()
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> pumvisible() ? pumconfirm()
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 set foldmethod=expr
