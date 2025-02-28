@@ -745,8 +745,10 @@ gra()
     for branch in $(git branch | grep "${FLAGS[@]}" | grep -ve '^[+*] '); do
         git checkout "$branch";
         if git rebase "$UPSTREAM/$DEFAULT_BRANCH"; then
-            git checkout "$DEFAULT_BRANCH"
-            git branch -D "$branch"
+            if [ "$(git rev-parse $branch)" = "$(git rev-parse $DEFAULT_BRANCH)" ]; then
+                git checkout "$DEFAULT_BRANCH"
+                git branch -D "$branch"
+            fi
         else
             git rebase --abort
             git clean -f -d
